@@ -45,6 +45,10 @@ $section-padding: 19px;
   &__position-bottom {
     margin-bottom: 36px;
   }
+
+  &__position-bottom-footer {
+    margin-bottom: 60px;
+  }
 }
 
 .header {
@@ -92,10 +96,6 @@ $section-padding: 19px;
 
   &__position-bottom-place {
     margin-bottom: 67px;
-  }
-
-  &__position-bottom-footer {
-    margin-bottom: 60px;
   }
 }
 

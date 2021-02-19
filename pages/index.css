@@ -4,7 +4,8 @@
 /* page */
 @import url(../blocks/page/page.css);
 @import url(../blocks/page/__position-center/page__position-center.css);
-@import url(../blocks/page/__position-bottom.css/page__position-bottom.css);
+@import url(../blocks/page/__position-bottom-header.css/page__position-bottom-header.css);
+@import url(../blocks/page/__position-bottom-footer/page__position-bottom-footer.css);
 /* header */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
@@ -12,7 +13,6 @@
 /* content */
 @import url(../blocks/content/content.css);
 @import url(../blocks/content/__position-center/content__position-center.css);
-@import url(../blocks/content/__position-bottom-footer/content__position-bottom-footer.css);
 @import url(../blocks/content/__position-bottom-place/content__position-bottom-place.css);
 @import url(../blocks/content/__position-bottom-profile/content__position-bottom-profile.css);
 /* profile */
