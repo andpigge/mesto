@@ -25,4 +25,4 @@
 #### __Для javascript__:
 * API DOM
 
-Ссылка на проект: [Места России](https://andpigge.github.io/mesto/index.js)
+Ссылка на проект: [Места России](https://andpigge.github.io/mesto/index.html)
