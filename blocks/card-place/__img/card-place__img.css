@@ -1,0 +1,5 @@
+.card-place__img {
+  width: 100%;
+  height: auto;
+  grid-area: image;
+}

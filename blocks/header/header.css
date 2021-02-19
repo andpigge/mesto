@@ -1,0 +1,27 @@
+.header {
+  box-sizing: border-box;
+  padding-left: 19px;
+  padding-right: 19px;
+  width: 100%;
+  max-width: 918px;
+  position: relative;
+  padding-top: 45px;
+  padding-bottom: 41px;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  width: 100%;
+  max-width: 880px;
+  height: 1px;
+  background-color: rgba(84, 84, 84, 0.7);
+}
+
+@media screen and (max-width: 913px) {
+  .header::before {
+    left: 0;
+  }
+}

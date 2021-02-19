@@ -1,0 +1,28 @@
+.profile__add-card-place {
+  display: block;
+  background-color: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 50px;
+  border: 2px solid white;
+  margin-left: auto;
+  background-image: url(../../../images/icons/profile-btn-add.svg);
+  background-size: 22px 22px;
+  grid-area: add-card-place;
+  transition: opacity 0.3s ease-out;
+}
+
+.profile__add-card-place:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 506px) {
+  .profile__add-card-place {
+    min-width: 282px;
+    margin: 0 auto;
+  }
+}

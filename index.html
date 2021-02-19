@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <!-- Дополнения Chrome Frame для браузера IE. Активирует Chrome Frame для IE если он есть. Плагин Chrome Frame позволяет использовать Chrome в браузерах IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Места России</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="page">
+  <header class="header page__position-center page__position-bottom">
+    <a href="#" target="_self" class="header__link">
+      <img src="./images/logo.svg" alt="Место Россия" class="header__logo">
+    </a>
+    <!-- /.header__link -->
+  </header>
+  <!-- /.header -->
+  <main class="content">
+    <section class="profile content__position-center content__position-bottom-profile">
+      <a href="#" target="_self" class="profile__link-img">
+        <img src="./images/profile-image.jpg" alt="Портрет" class="profile__img">
+      </a>
+      <!-- /.profile__link -->
+      <div class="profile__about">
+        <div class="profile__container-text">
+          <h1 class="profile__title-name">
+            Жак-Ив Кусто
+          </h1>
+          <p class="profile__subtitle-does">
+            Исследователь океана
+          </p>
+        </div>
+        <!-- /.profile__container-text -->
+        <button class="profile__edit-btn"></button>
+      </div>
+      <!-- /.profile__about -->
+      <button class="profile__add-card-place"></button>
+    </section>
+    <!-- /.profile -->
+    <section class="place content__position-center content__position-bottom-place">
+      <ul class="place__list">
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-1.jpg" alt="Карачаевск" class="card-place__img">
+            <h2 class="card-place__title">
+              Карачаевск
+            </h2>
+            <button class="card-place__like-btn card-place__like-btn_active"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
+            <h2 class="card-place__title">
+              Гора Эльбрус
+            </h2>
+            <button class="card-place__like-btn"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
+            <h2 class="card-place__title">
+              Домбай
+            </h2>
+            <button class="card-place__like-btn"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
+            <h2 class="card-place__title">
+              Гора Эльбрус
+            </h2>
+            <button class="card-place__like-btn"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
+            <h2 class="card-place__title">
+              Домбай
+            </h2>
+            <button class="card-place__like-btn"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+        <li class="place__item">
+          <div class="card-place">
+            <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
+            <h2 class="card-place__title">
+              Карачаево-Черкессия
+            </h2>
+            <button class="card-place__like-btn"></button>
+          </div>
+          <!-- /.card-place -->
+        </li>
+        <!-- /.place__item -->
+      </ul>
+      <!-- /.place__list -->
+    </section>
+    <!-- /.place -->
+  </main>
+  <!-- /.content -->
+  <footer class="footer content__position-center content__position-bottom-footer">
+    <p class="footer__text-copyright">
+      &copy; 2020 Mesto Russia
+    </p>
+  </footer>
+  <section class="popup">
+    <div class="popup__container">
+      <button class="popup__btn"></button>
+      <form class="popup__form">
+        <fieldset class="popup__form-edit-profile">
+          <h2 class="popup__form-title">
+            Редактировать профиль
+          </h2>
+          <input type="text" class="popup__form-input-text" id="popup__form-name" value="Жак-Ив Кусто" placeholder="Имя">
+          <input type="text" class="popup__form-input-text" id="popup__form-does" value="Исследователь океана" placeholder="Деятельность">
+          <button class="popup__form-submit-btn">
+            Сохранить
+          </button>
+        </fieldset>
+      </form>
+    </div>
+    <!-- /.popup__container -->
+  </section>
+  <!-- /.popup -->
+
+  <script src="./script.js"></script>
+</body>
+</html>

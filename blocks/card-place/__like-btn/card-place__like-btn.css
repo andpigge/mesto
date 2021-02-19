@@ -1,0 +1,21 @@
+.card-place__like-btn {
+  display: block;
+  background-color: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../../../images/icons/card-place-like.svg);
+  background-size: cover;
+  width: 22px;
+  height: 19px;
+  margin-right: 20px;
+  margin-left: auto;
+  grid-area: button;
+  transition: opacity 0.2s ease-out;
+}
+
+.card-place__like-btn:hover {
+  opacity: 0.5;
+}

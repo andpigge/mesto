@@ -1,0 +1,9 @@
+.card-place {
+  min-height: 361px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  display: grid;
+  align-items: baseline;
+  grid-template-areas: "image image" "title button";
+}
