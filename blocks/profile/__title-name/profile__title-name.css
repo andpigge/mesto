@@ -20,6 +20,12 @@
   }
 }
 
+@media screen and (max-width: 506px) {
+  .profile__title-name {
+    max-width: 305px;
+  }
+}
+
 @media screen and (max-width: 384px) {
   .profile__title-name {
     font-size: 27px;
