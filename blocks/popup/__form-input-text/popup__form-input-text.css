@@ -1,16 +1,18 @@
 .popup__form-input-text {
-  border: none;
   box-sizing: border-box;
+  border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 358px;
   min-height: 27px;
   margin-bottom: 30px;
   font-family: "Inter", sans-serif;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   color: black;
+  padding: 0;
+  padding-bottom: 13px;
 }
 
 .popup__form-input-text:last-of-type {
