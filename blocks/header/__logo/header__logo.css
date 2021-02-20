@@ -2,7 +2,7 @@
   width: 142px;
   height: auto;
   max-height: 30px;
-  object-fit: cover;
+  object-fit: 100%;
 }
 
 @media screen and (max-width: 384px) {
@@ -10,6 +10,6 @@
     width: 104px;
     height: auto;
     max-height: 30px;
-    object-fit: cover;
+    object-fit: 100%;
   }
 }

@@ -9,12 +9,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 300px;
+  max-width: 400px;
 }
 
 @media screen and (max-width: 768px) {
   .profile__title-name {
     max-width: 270px;
+    font-size: 30px;
+    line-height: 36px;
   }
 }
 

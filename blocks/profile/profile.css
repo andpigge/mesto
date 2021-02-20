@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 801px) {
   .profile {
     display: grid;
     grid-template-areas: "link-img about" "add-card-place add-card-place";
