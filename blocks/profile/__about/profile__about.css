@@ -1,4 +1,5 @@
 .profile__about {
+  position: relative;
   display: flex;
   align-items: baseline;
   grid-area: about;

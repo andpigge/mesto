@@ -6,3 +6,11 @@
   line-height: 22px;
   color: white;
 }
+
+@media screen and (max-width: 384px) {
+  .profile__subtitle-does {
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+}

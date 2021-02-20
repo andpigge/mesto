@@ -20,6 +20,8 @@
 
 @media screen and (max-width: 384px) {
   .profile__title-name {
-    max-width: 190px;
+    font-size: 27px;
+    line-height: 33px;
+    margin-bottom: 14px;
   }
 }
