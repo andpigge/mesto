@@ -1,9 +1,9 @@
-.page__position-bottom-footer {
+.page__footer {
   margin-bottom: 60px;
 }
 
 @media screen and (max-width: 384px) {
-  .page__position-bottom-footer {
+  .page__footer {
     margin-bottom: 36px;
   }
 }

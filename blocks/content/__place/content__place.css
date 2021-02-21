@@ -1,9 +1,9 @@
-.content__position-bottom-place {
+.content__place {
   margin-bottom: 67px;
 }
 
 @media screen and (max-width: 384px) {
-  .content__position-bottom-place {
+  .content__place {
     margin-bottom: 48px;
   }
 }
