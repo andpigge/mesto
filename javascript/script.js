@@ -1,57 +1,39 @@
-let name = 'Жак-Ив Кусто';
-let does = 'Исследователь океана';
-
 // Блок profile
 let profile = document.querySelector('.profile');
 // Кнопка редактировать данные из профиля
 let editBtn = profile.querySelector('.profile__edit-btn');
+// Данные из профиля
+let titleName = profile.querySelector('.profile__title-name');
+let subtitleDoes = profile.querySelector('.profile__subtitle-does');
 
 // Блок popup
 let popup = document.querySelector('.popup');
 // Данные пользователя
-let popupFormName = document.querySelector('#popup__form-name');
-let popupFormDoes = document.querySelector('#popup__form-does');
+let popupFormName = document.querySelector('.popup__form-input-text_value_name');
+let popupFormDoes = document.querySelector('.popup__form-input-text_value_does');
 // Кнопка закрытие попапа
 let popupBtn = popup.querySelector('.popup__btn');
 
 // Блок form
 let form = popup.querySelector('.popup__form');
 
-/* Функция всплывет при компиляции кода */
-editProfile();
-
-// Записывает текст из переменных name и does в профиль с данными пользователя. Меняет value у текстовых полей
-function editProfile() {
-  // Данные из профиля
-  let titleName = profile.querySelector('.profile__title-name');
-  let subtitleDoes = profile.querySelector('.profile__subtitle-does');
-
-  titleName.textContent = name;
-  subtitleDoes.textContent = does;
-
-  popupFormName.value = name;
-  popupFormDoes.value = does;
-
-  return 'Профиль успешно изменен';
-}
-
 /* Открытие попапа */
-function openPopup(event) {
-  event.preventDefault();
-
+function openPopup() {
   popup.classList.add('popup_opened');
+
+  titleName.textContent = popupFormName.value;
+  subtitleDoes.textContent = popupFormDoes.value;
 }
 
 editBtn.addEventListener('click', openPopup);
 
 /* Закрытие попапа */
-function closePopup(event) {
-  event.preventDefault();
-
+function closePopup() {
   popup.classList.remove('popup_opened');
 
-  popupFormName.value = name;
-  popupFormDoes.value = does;
+  /* Есть условие в брифе. Если пользователь закрывает попап нажав на крестик, то введённые значения не сохраняются. */
+  popupFormName.value = titleName.textContent;
+  popupFormDoes.value = subtitleDoes.textContent;
 }
 
 popupBtn.addEventListener('click', closePopup);
@@ -60,10 +42,8 @@ popupBtn.addEventListener('click', closePopup);
 function formSubmitHandler (event) {
   event.preventDefault();
 
-  name = popupFormName.value;
-  does = popupFormDoes.value;
-
-  editProfile();
+  titleName.textContent = popupFormName.value;
+  subtitleDoes.textContent = popupFormDoes.value;
 
   popup.classList.remove('popup_opened');
 }

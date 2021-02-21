@@ -1,3 +1,7 @@
 .popup__form {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 430px;
 }
