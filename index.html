@@ -114,24 +114,22 @@
       &copy; 2020 Mesto Russia
     </p>
   </footer>
-  <section class="popup">
+  <div class="popup">
     <div class="popup__container">
       <button class="popup__btn"></button>
-      <form class="popup__form">
-        <fieldset class="popup__form-edit-profile">
-          <h2 class="popup__form-title">
-            Редактировать профиль
-          </h2>
-          <input type="text" class="popup__form-input-text" id="popup__form-name" value="Жак-Ив Кусто" placeholder="Имя">
-          <input type="text" class="popup__form-input-text" id="popup__form-does" value="Исследователь океана" placeholder="Деятельность">
-          <button class="popup__form-submit-btn">
-            Сохранить
-          </button>
-        </fieldset>
+      <form class="popup__form" name="edit-profile">
+        <h2 class="popup__form-title">
+          Редактировать профиль
+        </h2>
+        <input type="text" class="popup__form-input-text popup__form-input-text_value_name" value="Жак-Ив Кусто" placeholder="Имя" name="profile-name">
+        <input type="text" class="popup__form-input-text popup__form-input-text_value_does" value="Исследователь океана" placeholder="Деятельность" name="profile-does">
+        <button class="popup__form-submit-btn">
+          Сохранить
+        </button>
       </form>
     </div>
     <!-- /.popup__container -->
-  </section>
+  </div>
   <!-- /.popup -->
 
   <script src="./javascript/script.js"></script>
