@@ -17,12 +17,17 @@ let popupBtn = popup.querySelector('.popup__btn');
 // Блок form
 let form = popup.querySelector('.popup__form');
 
+function editProfile() {
+  titleName.textContent = popupFormName.value;
+  subtitleDoes.textContent = popupFormDoes.value;
+}
+
 /* Открытие попапа */
 function openPopup() {
   popup.classList.add('popup_opened');
 
-  titleName.textContent = popupFormName.value;
-  subtitleDoes.textContent = popupFormDoes.value;
+  /* Вынес повторяющий код в отдельную функцию */
+  editProfile();
 }
 
 editBtn.addEventListener('click', openPopup);
@@ -42,10 +47,10 @@ popupBtn.addEventListener('click', closePopup);
 function formSubmitHandler (event) {
   event.preventDefault();
 
-  titleName.textContent = popupFormName.value;
-  subtitleDoes.textContent = popupFormDoes.value;
-
   popup.classList.remove('popup_opened');
+
+  /* Вынес повторяющий код в отдельную функцию */
+  editProfile();
 }
 
 form.addEventListener('submit', formSubmitHandler);
