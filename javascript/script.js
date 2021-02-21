@@ -17,14 +17,25 @@ let popupBtn = popup.querySelector('.popup__btn');
 // Блок form
 let form = popup.querySelector('.popup__form');
 
+/* Сохраняет данные из формы в блок профиля */
 function editProfile() {
   titleName.textContent = popupFormName.value;
   subtitleDoes.textContent = popupFormDoes.value;
 }
 
+/* Меняет класс в зависимости от условия */
+function toggleClass() {
+  if (popup.classList.contains('popup_opened')) {
+    popup.classList.toggle('popup_opened');
+  } else {
+    popup.classList.toggle('popup_opened');
+  }
+}
+
 /* Открытие попапа */
 function openPopup() {
-  popup.classList.add('popup_opened');
+  /* Вынес повторяющий код в отдельную функцию */
+  toggleClass();
 
   /* Вынес повторяющий код в отдельную функцию */
   editProfile();
@@ -34,7 +45,8 @@ editBtn.addEventListener('click', openPopup);
 
 /* Закрытие попапа */
 function closePopup() {
-  popup.classList.remove('popup_opened');
+  /* Вынес повторяющий код в отдельную функцию */
+  toggleClass();
 
   /* Есть условие в брифе. Если пользователь закрывает попап нажав на крестик, то введённые значения не сохраняются. */
   popupFormName.value = titleName.textContent;
@@ -47,10 +59,11 @@ popupBtn.addEventListener('click', closePopup);
 function formSubmitHandler (event) {
   event.preventDefault();
 
-  popup.classList.remove('popup_opened');
-
   /* Вынес повторяющий код в отдельную функцию */
   editProfile();
+
+  /* Вынес повторяющий код в отдельную функцию */
+  toggleClass();
 }
 
 form.addEventListener('submit', formSubmitHandler);
