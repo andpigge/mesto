@@ -5,14 +5,8 @@
   grid-area: about;
 }
 
-@media screen and (max-width: 700px) {
-  .profile__about {
-    margin-bottom: 36px;
-  }
-}
-
 @media screen and (max-width: 506px) {
   .profile__about {
-    margin: 0 auto;
+    margin: 0 auto 36px;
   }
 }

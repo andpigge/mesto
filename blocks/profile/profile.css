@@ -13,11 +13,13 @@
     display: grid;
     grid-template-areas: "link-img about" "add-card-place add-card-place";
     justify-content: center;
+    row-gap: 24px;
   }
 }
 
 @media screen and (max-width: 506px) {
   .profile {
     grid-template-areas: "link-img" "about" "add-card-place";
+    row-gap: 0;
   }
 }
