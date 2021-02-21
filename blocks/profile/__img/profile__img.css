@@ -4,4 +4,12 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  margin-right: 30px;
+  grid-area: link-img;
+}
+
+@media screen and (max-width: 506px) {
+  .profile__img {
+    margin: 0 auto 22px;
+  }
 }
