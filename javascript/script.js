@@ -27,8 +27,12 @@ function editProfile() {
 function toggleClass() {
   if (popup.classList.contains('popup_opened')) {
     popup.classList.toggle('popup_opened');
+    /* Чтобы popup не скролился */
+    document.body.setAttribute('style', 'overflow: auto');
   } else {
     popup.classList.toggle('popup_opened');
+    /* Чтобы popup не скролился */
+    document.body.setAttribute('style', 'overflow: hidden');
   }
 }
 
