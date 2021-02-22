@@ -23,6 +23,12 @@ function editProfile() {
   subtitleDoes.textContent = popupFormDoes.value;
 }
 
+/* Сохраняет данные из блока профиля в форму  */
+function editInputValue() {
+  popupFormName.value = titleName.textContent;
+  popupFormDoes.value = subtitleDoes.textContent;
+}
+
 /* Меняет класс в зависимости от условия */
 function toggleClass() {
   if (popup.classList.contains('popup_opened')) {
@@ -41,29 +47,27 @@ function openPopup() {
   /* Вынес повторяющий код в отдельную функцию */
   toggleClass();
 
-  /* Вынес повторяющий код в отдельную функцию */
-  editProfile();
+  /* Есть условие в брифе. Если пользователь закрывает попап нажав на крестик, то введённые значения не сохраняются. */
+  /* Решение: при открытии popup, данные из профиля, заносятся в форму */
+  editInputValue();
 }
 
 editBtn.addEventListener('click', openPopup);
 
 /* Закрытие попапа */
-function closePopup() {
-  /* Вынес повторяющий код в отдельную функцию */
+/* Эта функция уже не нужна */
+/* function closePopup() {
+  // Вынес повторяющий код в отдельную функцию
   toggleClass();
+} */
 
-  /* Есть условие в брифе. Если пользователь закрывает попап нажав на крестик, то введённые значения не сохраняются. */
-  popupFormName.value = titleName.textContent;
-  popupFormDoes.value = subtitleDoes.textContent;
-}
-
-popupBtn.addEventListener('click', closePopup);
+/* Закрытие попапа */
+popupBtn.addEventListener('click', toggleClass);
 
 /* Форма редактирования профиля */
 function formSubmitHandler (event) {
   event.preventDefault();
 
-  /* Вынес повторяющий код в отдельную функцию */
   editProfile();
 
   /* Вынес повторяющий код в отдельную функцию */
