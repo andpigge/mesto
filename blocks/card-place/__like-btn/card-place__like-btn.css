@@ -11,7 +11,7 @@
   width: 22px;
   height: 19px;
   margin-right: 20px;
-  margin-left: auto;
+  margin-left: 20px;
   grid-area: button;
   transition: opacity 0.2s ease-out;
 }

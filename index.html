@@ -32,74 +32,7 @@
     </section>
     <!-- /.profile -->
     <section class="place content__position-center content__place">
-      <ul class="place__list">
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
-            <h2 class="card-place__title">
-              Карачаево-Черкессия
-            </h2>
-            <button class="card-place__like-btn card-place__like-btn_active" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
-            <h2 class="card-place__title">
-              Гора Эльбрус
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
-            <h2 class="card-place__title">
-              Домбай
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
-            <h2 class="card-place__title">
-              Гора Эльбрус
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
-            <h2 class="card-place__title">
-              Домбай
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
-            <h2 class="card-place__title">
-              Карачаево-Черкессия
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-      </ul>
+      <ul class="place__list"></ul>
       <!-- /.place__list -->
     </section>
     <!-- /.place -->
@@ -128,6 +61,21 @@
   </div>
   <!-- /.popup -->
 
-  <script src="./javascript/script.js"></script>
+  <template class="place-list-template">
+    <li class="place__item">
+      <div class="card-place">
+        <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
+        <h2 class="card-place__title">
+          Карачаево-Черкессия
+        </h2>
+        <button class="card-place__like-btn card-place__like-btn_active" type="button"></button>
+      </div>
+      <!-- /.card-place -->
+    </li>
+    <!-- /.place__item -->
+  </template>
+
+  <!-- <script src="./javascript/script.js"></script> -->
+  <script src="./javascript/editProfile.js"></script>
 </body>
 </html>
