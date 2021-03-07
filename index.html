@@ -77,15 +77,30 @@
     <!-- /.popup__container -->
   </div>
   <!-- /.popup -->
+  <div class="popup popup_review_img">
+    <div class="popup__container popup__container_review_img">
+      <button class="popup__btn" type="button"></button>
+      <figure class="popup__img-container">
+        <img src="https://cs9.pikabu.ru/post_img/big/2020/05/12/5/1589265480150888268.jpg" class="popup__img" alt="Картинка по-умолчанию">
+        <figcaption class="popup__img-text">
+          Просто красивая картинка
+        </figcaption>
+      </figure>
+    </div>
+    <!-- /.popup__container -->
+  </div>
+  <!-- /.popup -->
 
   <template class="place-list-template">
     <li class="place__item">
       <div class="card-place">
+        <!-- Надо попросить у дизайнера чтобы на кнопку добавил тень, не видно кнопку на белом -->
+        <button class="card-place__delete-btn"></button>
         <img src="./images/card-place-img-1.jpg" alt="Картинка отсуствует" class="card-place__img">
         <h2 class="card-place__title">
           Карачаево-Черкессия
         </h2>
-        <button class="card-place__like-btn card-place__like-btn_active" type="button"></button>
+        <button class="card-place__like-btn" type="button"></button>
       </div>
       <!-- /.card-place -->
     </li>

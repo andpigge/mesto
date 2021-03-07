@@ -39,6 +39,8 @@ const btnAddCard = profile.querySelector('.profile__add-card-place');
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 // Попад добавления карточек
 const popupAddCard = document.querySelector('.popup_add_card');
+/* Попап просмотр картинки */
+const popupShowImg = document.querySelector('.popup_review_img');
 // Кнопки закрытие попапа
 const popupBtns = document.querySelectorAll('.popup__btn');
 
@@ -93,7 +95,7 @@ function editInputValue() {
 /* Открытие попапа редактирования профиля */
 function openPopupEditProfile() {
   addPopup(popupEditProfile);
-  
+
   editInputValue();
 }
 
@@ -166,7 +168,53 @@ function formSubmitHandlerAddCard (event) {
   clearFormInput(inputAddName, inputAddSrcImg);
 
   removePopup(event);
+
+  findAllBtnDeleteCards();
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
 
+/* Меняет класс в кнопке */
+function likeCard(event) {
+  event.target.classList.toggle('card-place__like-btn_active');
+}
+
+/* Кпопки лайки)) сердечки */
+const likeBtns = place.querySelectorAll('.card-place__like-btn');
+
+likeBtns.forEach(btn => {
+  btn.addEventListener('click', likeCard);
+});
+
+/* Функция удаляет карточку с верстки и с массива */
+function deleteCard(event) {
+  event.target.closest('.place__item').remove();
+  console.log(1)
+}
+
+/* Функция находит все кнопки удаления в карточке, и вешает событие click. Понадоюиться при создании новой карточки */
+function findAllBtnDeleteCards() {
+  /* Кпопки удаления корточки */
+  const deleteBtns = place.querySelectorAll('.card-place__delete-btn');
+
+  deleteBtns.forEach(btn => {
+    btn.addEventListener('click', deleteCard);
+  });
+}
+
+findAllBtnDeleteCards();
+
+/* Просмотр картинки */
+function showImg(event) {
+  popupShowImg.querySelector('.popup__img').src = event.target.src;
+
+  popupShowImg.querySelector('.popup__img-text').textContent = event.target.nextElementSibling.textContent;
+  addPopup(popupShowImg);
+}
+
+/* Картинки в карточке */
+const cardImgs = place.querySelectorAll('.card-place__img');
+
+cardImgs.forEach(btn => {
+  btn.addEventListener('click', showImg);
+});
