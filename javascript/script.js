@@ -213,9 +213,15 @@ findAllBtnDeleteCards();
 
 /* Просмотр картинки */
 function showImg(event) {
-  popupShowImg.querySelector('.popup__img').src = event.target.src;
+  const imgEll = popupShowImg.querySelector('.popup__img');
+  imgEll.src = event.target.src;
 
-  popupShowImg.querySelector('.popup__img-text').textContent = event.target.nextElementSibling.textContent;
+  const titleCard = event.target.nextElementSibling.textContent;
+  popupShowImg.querySelector('.popup__img-text').textContent = titleCard;
+
+  imgEll.alt = titleCard;
+
+  console.log(imgEll)
   addPopup(popupShowImg);
 }
 
