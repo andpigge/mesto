@@ -32,74 +32,7 @@
     </section>
     <!-- /.profile -->
     <section class="place content__position-center content__place">
-      <ul class="place__list">
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
-            <h2 class="card-place__title">
-              Карачаево-Черкессия
-            </h2>
-            <button class="card-place__like-btn card-place__like-btn_active" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
-            <h2 class="card-place__title">
-              Гора Эльбрус
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
-            <h2 class="card-place__title">
-              Домбай
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-2.jpg" alt="Гора Эльбрус" class="card-place__img">
-            <h2 class="card-place__title">
-              Гора Эльбрус
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-3.jpg" alt="Домбай" class="card-place__img">
-            <h2 class="card-place__title">
-              Домбай
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-        <li class="place__item">
-          <div class="card-place">
-            <img src="./images/card-place-img-1.jpg" alt="Карачаево-Черкессия" class="card-place__img">
-            <h2 class="card-place__title">
-              Карачаево-Черкессия
-            </h2>
-            <button class="card-place__like-btn" type="button"></button>
-          </div>
-          <!-- /.card-place -->
-        </li>
-        <!-- /.place__item -->
-      </ul>
+      <ul class="place__list"></ul>
       <!-- /.place__list -->
     </section>
     <!-- /.place -->
@@ -110,11 +43,11 @@
       &copy; 2020 Mesto Russia
     </p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_edit_profile">
     <div class="popup__container">
       <button class="popup__btn" type="button"></button>
       <form class="popup__form" name="edit-profile">
-        <h2 class="popup__form-title">
+        <h2 class="popup__form-title popup__form-title_position_center">
           Редактировать профиль
         </h2>
         <input type="text" class="popup__form-input-text popup__form-input-text_value_name" value="Жак-Ив Кусто" placeholder="Имя" name="profile-name">
@@ -127,6 +60,52 @@
     <!-- /.popup__container -->
   </div>
   <!-- /.popup -->
+  <div class="popup popup_add_card">
+    <div class="popup__container">
+      <button class="popup__btn" type="button"></button>
+      <form class="popup__form" name="edit-profile">
+        <h2 class="popup__form-title">
+          Новое место
+        </h2>
+        <input type="text" class="popup__form-input-text popup__form-input-text_value_name" placeholder="Название" name="place-name">
+        <input type="text" class="popup__form-input-text popup__form-input-text_value_does" placeholder="Ссылка на картинку" name="place-img">
+        <button class="popup__form-submit-btn" type="submit">
+          Создать
+        </button>
+      </form>
+    </div>
+    <!-- /.popup__container -->
+  </div>
+  <!-- /.popup -->
+  <div class="popup popup_review_img">
+    <div class="popup__container popup__container_review_img">
+      <button class="popup__btn" type="button"></button>
+      <figure class="popup__img-container">
+        <img src="https://cs9.pikabu.ru/post_img/big/2020/05/12/5/1589265480150888268.jpg" class="popup__img" alt="Картинка по-умолчанию">
+        <figcaption class="popup__img-text">
+          Просто красивая картинка
+        </figcaption>
+      </figure>
+    </div>
+    <!-- /.popup__container -->
+  </div>
+  <!-- /.popup -->
+
+  <template class="place-list-template">
+    <li class="place__item">
+      <div class="card-place">
+        <!-- Надо попросить у дизайнера чтобы на кнопку добавил тень, не видно кнопку на белом -->
+        <button class="card-place__delete-btn"></button>
+        <img src="./images/card-place-img-1.jpg" alt="Картинка отсуствует" class="card-place__img">
+        <h2 class="card-place__title">
+          Карачаево-Черкессия
+        </h2>
+        <button class="card-place__like-btn" type="button"></button>
+      </div>
+      <!-- /.card-place -->
+    </li>
+    <!-- /.place__item -->
+  </template>
 
   <script src="./javascript/script.js"></script>
 </body>

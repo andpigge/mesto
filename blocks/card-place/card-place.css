@@ -1,4 +1,5 @@
 .card-place {
+  position: relative;
   border-radius: 10px;
   overflow: hidden;
   background-color: white;
