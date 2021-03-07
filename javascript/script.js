@@ -141,7 +141,7 @@ function openPopupAddCard() {
 
 btnAddCard.addEventListener('click', openPopupAddCard);
 
-/* Функция очищает форму. Первый параметр формы инпуты которые нужно очистить */
+/* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
 function clearFormInput(...inputs) {
   inputs.forEach(input => {
     input.value = '';
@@ -169,7 +169,10 @@ function formSubmitHandlerAddCard (event) {
 
   removePopup(event);
 
+  /* Эти функции работают с новым созданым DOM */
   findAllBtnDeleteCards();
+  findAllImgShow();
+  findLikeBtn();
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
@@ -179,20 +182,24 @@ function likeCard(event) {
   event.target.classList.toggle('card-place__like-btn_active');
 }
 
-/* Кпопки лайки)) сердечки */
-const likeBtns = place.querySelectorAll('.card-place__like-btn');
+/* Ищет все кнопки с лайками, вешает на них события клика */
+function findLikeBtn() {
+  /* Кпопки лайки)) сердечки */
+  const likeBtns = place.querySelectorAll('.card-place__like-btn');
 
-likeBtns.forEach(btn => {
-  btn.addEventListener('click', likeCard);
-});
-
-/* Функция удаляет карточку с верстки и с массива */
-function deleteCard(event) {
-  event.target.closest('.place__item').remove();
-  console.log(1)
+  likeBtns.forEach(btn => {
+    btn.addEventListener('click', likeCard);
+  });
 }
 
-/* Функция находит все кнопки удаления в карточке, и вешает событие click. Понадоюиться при создании новой карточки */
+findLikeBtn();
+
+/* Удаляет карточку с верстки и с массива */
+function deleteCard(event) {
+  event.target.closest('.place__item').remove();
+}
+
+/* Находит все кнопки удаления в карточке, и вешает событие click. Понадобится при создании новой карточки */
 function findAllBtnDeleteCards() {
   /* Кпопки удаления корточки */
   const deleteBtns = place.querySelectorAll('.card-place__delete-btn');
@@ -212,9 +219,15 @@ function showImg(event) {
   addPopup(popupShowImg);
 }
 
-/* Картинки в карточке */
-const cardImgs = place.querySelectorAll('.card-place__img');
+/* Находит все имеющие картинки в карточке, и вешает на них событие click */
+function findAllImgShow() {
+  /* Картинки в карточке */
+  const cardImgs = place.querySelectorAll('.card-place__img');
 
-cardImgs.forEach(btn => {
-  btn.addEventListener('click', showImg);
-});
+  /* Находит все картинки в карточке, и вешает событие click. Понадобится при создании новой карточки */
+  cardImgs.forEach(btn => {
+    btn.addEventListener('click', showImg);
+  });
+}
+
+findAllImgShow();
