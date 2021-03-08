@@ -68,15 +68,11 @@ const placeListTemplate = document.querySelector('.place-list-template');
 /* Добавляет класс открытия попапа, на переданный в параметрах попап */
 function addPopup(popupType) {
   popupType.classList.add('popup_opened');
-  /* Чтобы popup не скролился */
-  document.body.setAttribute('style', 'overflow: hidden');
 }
 
 /* При нажатии на крестик или сохранить, открытый попап закрывается. Принимает параметром событие event, с помощью event узнаем какой попап нужно закрыть, с помощью closest зыкрываем попап дочерней кнопки */
 function removePopup(event) {
   event.target.closest('.popup').classList.remove('popup_opened');
-  /* Чтобы popup не скролился */
-  document.body.setAttribute('style', 'overflow: auto');
 }
 
 
@@ -121,16 +117,25 @@ formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
 /* При загрузке страницы данные в карточки заносятся из массива */
 showCards();
 
-/* Клонирует элемент шаблона, и выводит в карточку с местами данные из массива */
+/* Клонирует элемент шаблона, и выводит в карточку с местами, данные из массива */
 function showCards() {
   initialCards.forEach(item => {
-    const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
 
-    placeItem.querySelector('.card-place__img').src = item.link;
-    placeItem.querySelector('.card-place__title').textContent = item.name;
+    /* В переменную присваивается возвращаемое значение функции */
+    const placeItem = createCard(item.name, item.link);
 
     placeList.append(placeItem);
   });
+}
+
+/* Создаст одну карточку с местами. Принимает в параметры имя карточки, и ссылку на картинку */
+function createCard(nameCard, linkImg) {
+  const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
+
+  placeItem.querySelector('.card-place__title').textContent = nameCard;
+  placeItem.querySelector('.card-place__img').src = linkImg;
+
+  return placeItem;
 }
 
 
@@ -159,9 +164,8 @@ function formSubmitHandlerAddCard (event) {
 
   initialCards.push(objCard);
 
-  const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
-  placeItem.querySelector('.card-place__title').textContent = inputAddNameValue;
-  placeItem.querySelector('.card-place__img').src = inputAddSrcImgValue;
+  /* В переменную присваивается возвращаемое значение функции */
+  const placeItem = createCard(inputAddNameValue, inputAddSrcImgValue);
 
   placeList.prepend(placeItem);
 
