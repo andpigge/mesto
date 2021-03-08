@@ -37,11 +37,18 @@ const btnAddCard = profile.querySelector('.profile__add-card-place');
 
 // Попап редактирования профиля
 const popupEditProfile = document.querySelector('.popup_edit_profile');
+
 // Попад добавления карточек
 const popupAddCard = document.querySelector('.popup_add_card');
+
 /* Попап просмотр картинки */
 const popupShowImg = document.querySelector('.popup_review_img');
-// Кнопки закрытие попапа
+/* Картинка в попапе */
+const imgPopup = popupShowImg.querySelector('.popup__img');
+/* Текст в попапе */
+const textPopupShowImg = popupShowImg.querySelector('.popup__img-text');
+
+// Кнопки закрытия попапа
 const popupBtns = document.querySelectorAll('.popup__btn');
 
 // Форма редактирует профиль
@@ -68,15 +75,18 @@ const placeListTemplate = document.querySelector('.place-list-template');
 /* Добавляет класс открытия попапа, на переданный в параметрах попап */
 function addPopup(popupType) {
   popupType.classList.add('popup_opened');
-  /* Чтобы popup не скролился */
-  document.body.setAttribute('style', 'overflow: hidden');
 }
 
 /* При нажатии на крестик или сохранить, открытый попап закрывается. Принимает параметром событие event, с помощью event узнаем какой попап нужно закрыть, с помощью closest зыкрываем попап дочерней кнопки */
 function removePopup(event) {
   event.target.closest('.popup').classList.remove('popup_opened');
-  /* Чтобы popup не скролился */
-  document.body.setAttribute('style', 'overflow: auto');
+}
+
+/* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
+function clearFormInput(...inputs) {
+  inputs.forEach(input => {
+    input.value = '';
+  });
 }
 
 
@@ -121,16 +131,32 @@ formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
 /* При загрузке страницы данные в карточки заносятся из массива */
 showCards();
 
-/* Клонирует элемент шаблона, и выводит в карточку с местами данные из массива */
+/* Клонирует элемент шаблона, и выводит в карточку с местами, данные из массива */
 function showCards() {
   initialCards.forEach(item => {
-    const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
+    /* В переменную присваивается возвращаемое значение функции */
+    const placeItem = createCard(item.name, item.link);
 
-    placeItem.querySelector('.card-place__img').src = item.link;
-    placeItem.querySelector('.card-place__title').textContent = item.name;
+    /* Добавил события. Все события вешаются до того как DOM узлы будут добавлены в верстку */
+    eventsAddEl(placeItem);
 
+    /* Добавляется узел в верстку */
     placeList.append(placeItem);
   });
+}
+
+/* Создаст одну карточку с местами. Принимает в параметры имя карточки, и ссылку на картинку */
+function createCard(nameCard, linkImg) {
+  const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
+
+  placeItem.querySelector('.card-place__title').textContent = nameCard;
+
+  const imgNode = placeItem.querySelector('.card-place__img');
+
+  imgNode.src = linkImg;
+  imgNode.alt = nameCard;
+
+  return placeItem;
 }
 
 
@@ -141,13 +167,6 @@ function openPopupAddCard() {
 
 btnAddCard.addEventListener('click', openPopupAddCard);
 
-/* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
-function clearFormInput(...inputs) {
-  inputs.forEach(input => {
-    input.value = '';
-  });
-}
-
 /* Форма добавления карточки */
 function formSubmitHandlerAddCard (event) {
   event.preventDefault();
@@ -155,24 +174,23 @@ function formSubmitHandlerAddCard (event) {
   const inputAddNameValue = inputAddName.value;
   const inputAddSrcImgValue = inputAddSrcImg.value;
 
+  /* Создал обьект с карточкой */
   const objCard = {name: inputAddNameValue, link: inputAddSrcImgValue};
 
+  /* Добававил карточку в массив */
   initialCards.push(objCard);
 
-  const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
-  placeItem.querySelector('.card-place__title').textContent = inputAddNameValue;
-  placeItem.querySelector('.card-place__img').src = inputAddSrcImgValue;
+  /* В переменную присваивается возвращаемое значение функции. Создаст одну карточку */
+  const placeItem = createCard(inputAddNameValue, inputAddSrcImgValue);
+
+  /* Добавил события. Все события вешаются до того как DOM узлы будут добавлены в верстку */
+  eventsAddEl(placeItem);
 
   placeList.prepend(placeItem);
 
   clearFormInput(inputAddName, inputAddSrcImg);
 
   removePopup(event);
-
-  /* Эти функции работают с новым созданым DOM */
-  findAllBtnDeleteCards();
-  findAllImgShow();
-  findLikeBtn();
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
@@ -182,58 +200,30 @@ function likeCard(event) {
   event.target.classList.toggle('card-place__like-btn_active');
 }
 
-/* Ищет все кнопки с лайками, вешает на них события клика */
-function findLikeBtn() {
-  /* Кпопки лайки)) сердечки */
-  const likeBtns = place.querySelectorAll('.card-place__like-btn');
-
-  likeBtns.forEach(btn => {
-    btn.addEventListener('click', likeCard);
-  });
-}
-
-findLikeBtn();
-
 /* Удаляет карточку с верстки и с массива */
 function deleteCard(event) {
   event.target.closest('.place__item').remove();
 }
 
-/* Находит все кнопки удаления в карточке, и вешает событие click. Понадобится при создании новой карточки */
-function findAllBtnDeleteCards() {
-  /* Кпопки удаления корточки */
-  const deleteBtns = place.querySelectorAll('.card-place__delete-btn');
-
-  deleteBtns.forEach(btn => {
-    btn.addEventListener('click', deleteCard);
-  });
-}
-
-findAllBtnDeleteCards();
-
 /* Просмотр картинки */
 function showImg(event) {
-  const imgEll = popupShowImg.querySelector('.popup__img');
-  imgEll.src = event.target.src;
+  imgPopup.src = event.target.src;
 
   const titleCard = event.target.nextElementSibling.textContent;
-  popupShowImg.querySelector('.popup__img-text').textContent = titleCard;
+  textPopupShowImg.textContent = titleCard;
 
-  imgEll.alt = titleCard;
+  imgPopup.alt = titleCard;
 
-  console.log(imgEll)
   addPopup(popupShowImg);
 }
 
-/* Находит все имеющие картинки в карточке, и вешает на них событие click */
-function findAllImgShow() {
-  /* Картинки в карточке */
-  const cardImgs = place.querySelectorAll('.card-place__img');
-
-  /* Находит все картинки в карточке, и вешает событие click. Понадобится при создании новой карточки */
-  cardImgs.forEach(btn => {
-    btn.addEventListener('click', showImg);
-  });
+/* Вызывается до добавления DOM узла в верстку. Вызывает у найденных элементов события. Принимает элемент на который вешаются эти события */
+function eventsAddEl(item) {
+  /* Все события вешаются до того как DOM узлы будут добавлены в верстку */
+  /* Удаляется карточка */
+  item.querySelector('.card-place__delete-btn').addEventListener('click', deleteCard);
+  /* Ставиться лайк */
+  item.querySelector('.card-place__like-btn').addEventListener('click', likeCard);
+  /* Просмотр картинок из карточки в модальном окне */
+  item.querySelector('.card-place__img').addEventListener('click', showImg);
 }
-
-findAllImgShow();
