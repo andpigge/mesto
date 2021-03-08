@@ -82,6 +82,13 @@ function removePopup(event) {
   event.target.closest('.popup').classList.remove('popup_opened');
 }
 
+/* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
+function clearFormInput(...inputs) {
+  inputs.forEach(input => {
+    input.value = '';
+  });
+}
+
 
 /* Сохраняет данные из формы в блок профиля */
 function editProfile() {
@@ -127,10 +134,13 @@ showCards();
 /* Клонирует элемент шаблона, и выводит в карточку с местами, данные из массива */
 function showCards() {
   initialCards.forEach(item => {
-
     /* В переменную присваивается возвращаемое значение функции */
     const placeItem = createCard(item.name, item.link);
 
+    /* Добавил события. Все события вешаются до того как DOM узлы будут добавлены в верстку */
+    eventsAddEl(placeItem);
+
+    /* Добавляется узел в верстку */
     placeList.append(placeItem);
   });
 }
@@ -140,7 +150,11 @@ function createCard(nameCard, linkImg) {
   const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
 
   placeItem.querySelector('.card-place__title').textContent = nameCard;
-  placeItem.querySelector('.card-place__img').src = linkImg;
+
+  const imgNode = placeItem.querySelector('.card-place__img');
+
+  imgNode.src = linkImg;
+  imgNode.alt = nameCard;
 
   return placeItem;
 }
@@ -153,13 +167,6 @@ function openPopupAddCard() {
 
 btnAddCard.addEventListener('click', openPopupAddCard);
 
-/* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
-function clearFormInput(...inputs) {
-  inputs.forEach(input => {
-    input.value = '';
-  });
-}
-
 /* Форма добавления карточки */
 function formSubmitHandlerAddCard (event) {
   event.preventDefault();
@@ -167,23 +174,23 @@ function formSubmitHandlerAddCard (event) {
   const inputAddNameValue = inputAddName.value;
   const inputAddSrcImgValue = inputAddSrcImg.value;
 
+  /* Создал обьект с карточкой */
   const objCard = {name: inputAddNameValue, link: inputAddSrcImgValue};
 
+  /* Добававил карточку в массив */
   initialCards.push(objCard);
 
-  /* В переменную присваивается возвращаемое значение функции */
+  /* В переменную присваивается возвращаемое значение функции. Создаст одну карточку */
   const placeItem = createCard(inputAddNameValue, inputAddSrcImgValue);
+
+  /* Добавил события. Все события вешаются до того как DOM узлы будут добавлены в верстку */
+  eventsAddEl(placeItem);
 
   placeList.prepend(placeItem);
 
   clearFormInput(inputAddName, inputAddSrcImg);
 
   removePopup(event);
-
-  /* Эти функции работают с новым созданым DOM */
-  findAllBtnDeleteCards();
-  findAllImgShow();
-  findLikeBtn();
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
@@ -193,34 +200,10 @@ function likeCard(event) {
   event.target.classList.toggle('card-place__like-btn_active');
 }
 
-/* Ищет все кнопки с лайками, вешает на них события клика */
-function findLikeBtn() {
-  /* Кпопки лайки)) сердечки */
-  const likeBtns = place.querySelectorAll('.card-place__like-btn');
-
-  likeBtns.forEach(btn => {
-    btn.addEventListener('click', likeCard);
-  });
-}
-
-findLikeBtn();
-
 /* Удаляет карточку с верстки и с массива */
 function deleteCard(event) {
   event.target.closest('.place__item').remove();
 }
-
-/* Находит все кнопки удаления в карточке, и вешает событие click. Понадобится при создании новой карточки */
-function findAllBtnDeleteCards() {
-  /* Кпопки удаления корточки */
-  const deleteBtns = place.querySelectorAll('.card-place__delete-btn');
-
-  deleteBtns.forEach(btn => {
-    btn.addEventListener('click', deleteCard);
-  });
-}
-
-findAllBtnDeleteCards();
 
 /* Просмотр картинки */
 function showImg(event) {
@@ -234,16 +217,13 @@ function showImg(event) {
   addPopup(popupShowImg);
 }
 
-/* Находит все имеющие картинки в карточке, и вешает на них событие click */
-function findAllImgShow() {
-
-  /* Картинки в карточке */
-  const cardImgs = place.querySelectorAll('.card-place__img');
-
-  /* Находит все картинки в карточке, и вешает событие click. Понадобится при создании новой карточки */
-  cardImgs.forEach(btn => {
-    btn.addEventListener('click', showImg);
-  });
+/* Вызывается до добавления DOM узла в верстку. Вызывает у найденных элементов события. Принимает элемент на который вешаются эти события */
+function eventsAddEl(item) {
+  /* Все события вешаются до того как DOM узлы будут добавлены в верстку */
+  /* Удаляется карточка */
+  item.querySelector('.card-place__delete-btn').addEventListener('click', deleteCard);
+  /* Ставиться лайк */
+  item.querySelector('.card-place__like-btn').addEventListener('click', likeCard);
+  /* Просмотр картинок из карточки в модальном окне */
+  item.querySelector('.card-place__img').addEventListener('click', showImg);
 }
-
-findAllImgShow();
