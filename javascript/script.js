@@ -37,11 +37,18 @@ const btnAddCard = profile.querySelector('.profile__add-card-place');
 
 // Попап редактирования профиля
 const popupEditProfile = document.querySelector('.popup_edit_profile');
+
 // Попад добавления карточек
 const popupAddCard = document.querySelector('.popup_add_card');
+
 /* Попап просмотр картинки */
 const popupShowImg = document.querySelector('.popup_review_img');
-// Кнопки закрытие попапа
+/* Картинка в попапе */
+const imgPopup = popupShowImg.querySelector('.popup__img');
+/* Текст в попапе */
+const textPopupShowImg = popupShowImg.querySelector('.popup__img-text');
+
+// Кнопки закрытия попапа
 const popupBtns = document.querySelectorAll('.popup__btn');
 
 // Форма редактирует профиль
@@ -217,20 +224,19 @@ findAllBtnDeleteCards();
 
 /* Просмотр картинки */
 function showImg(event) {
-  const imgEll = popupShowImg.querySelector('.popup__img');
-  imgEll.src = event.target.src;
+  imgPopup.src = event.target.src;
 
   const titleCard = event.target.nextElementSibling.textContent;
-  popupShowImg.querySelector('.popup__img-text').textContent = titleCard;
+  textPopupShowImg.textContent = titleCard;
 
-  imgEll.alt = titleCard;
+  imgPopup.alt = titleCard;
 
-  console.log(imgEll)
   addPopup(popupShowImg);
 }
 
 /* Находит все имеющие картинки в карточке, и вешает на них событие click */
 function findAllImgShow() {
+
   /* Картинки в карточке */
   const cardImgs = place.querySelectorAll('.card-place__img');
 
