@@ -5,7 +5,6 @@
   width: 100%;
   max-width: 358px;
   min-height: 27px;
-  margin-bottom: 30px;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -13,14 +12,9 @@
   color: black;
   padding: 0;
   padding-bottom: 13px;
+  margin-bottom: 5px;
 }
 
-.popup__form-input-text:last-of-type {
-  margin-bottom: 48px;
-}
-
-@media screen and (max-width: 480px) {
-  .popup__form-input-text:last-of-type {
-    margin-bottom: 45px;
-  }
+.popup__form-input-text::placeholder {
+  color: #C4C4C4;
 }
