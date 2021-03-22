@@ -35,6 +35,9 @@ const subtitleDoes = profile.querySelector('.profile__subtitle-does');
 /* Кнопка добавляет карточки с местами */
 const btnAddCard = profile.querySelector('.profile__add-card-place');
 
+/* Общий класс попапов */
+const popupItems = document.querySelectorAll('.popup');
+
 // Попап редактирования профиля
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 
@@ -48,9 +51,6 @@ const imgPopup = popupShowImg.querySelector('.popup__img');
 /* Текст в попапе */
 const textPopupShowImg = popupShowImg.querySelector('.popup__img-text');
 
-// Кнопки закрытия попапа
-const popupBtns = document.querySelectorAll('.popup__btn');
-
 // Форма редактирует профиль
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
 // Данные пользователя, из формы редактирования профиля
@@ -62,6 +62,11 @@ const formAddCard = popupAddCard.querySelector('.popup__form');
 // Данные пользователя, из формы добавления карточки
 const inputAddName = formAddCard.querySelector('.popup__form-input-text_value_name');
 const inputAddSrcImg = formAddCard.querySelector('.popup__form-input-text_value_does');
+
+/* Блок с сообщением об ошибке в попапе */
+const blockMessageError = document.querySelectorAll('.popup__error-message');
+/* Все поля в форме */
+const allInputPopup = document.querySelectorAll('.popup__form-input-text');
 
 
 /* Список карточек с местами */
@@ -102,8 +107,26 @@ function editInputValue() {
   inputEditDoes.value = subtitleDoes.textContent;
 }
 
+/* Очищает текст в с ошибкой в попапе */
+const clearTextFormMessage = () => {
+  blockMessageError.forEach(block => {
+    block.textContent = '';
+    block.classList.remove('popup__form-input-text_type_error');
+  });
+}
+
+/* Удаляет класс со всех инпутов */
+const clearClassInputs = () => {
+  allInputPopup.forEach(input => {
+    input.classList.remove('popup__form-input-text_type_error');
+  });
+}
+
 /* Открытие попапа редактирования профиля */
 function openPopupEditProfile() {
+  clearTextFormMessage();
+  clearClassInputs();
+
   addPopup(popupEditProfile);
 
   editInputValue();
@@ -111,10 +134,35 @@ function openPopupEditProfile() {
 
 editBtn.addEventListener('click', openPopupEditProfile);
 
-/* Закрытие попапов нажатие на крестик */
-popupBtns.forEach(button => {
-  button.addEventListener('click', removePopup);
-});
+const checkClassPopup = (positionClick, event) => {
+  if (event.target.classList.contains(positionClick)) {
+    removePopup(event);
+  }
+};
+
+/* Принимает атрибутом строку, место на которое кликает пользователь, чтобы закрыть попап */
+const closePopupMouse = positionClick => {
+  /* Событие mousedown, так как неприятно получается зажать и отпустить в не поля, и закрыть попап */
+  popupItems.forEach(item => {
+    item.addEventListener('mousedown', event => checkClassPopup(positionClick, event));
+  });
+};
+
+closePopupMouse('popup__btn');
+closePopupMouse('popup');
+
+/* Принимает атрибутом строку, клавишу по которой закрывать попапы */
+const closePopupKey = key => {
+  document.addEventListener('keydown', event => {
+    if (event.key === key) {
+      popupItems.forEach(popup => {
+        popup.classList.remove('popup_opened');
+      });
+    }
+  });
+}
+
+closePopupKey('Escape');
 
 /* Форма редактирования профиля */
 function formSubmitHandlerEditProfile (event) {
@@ -162,6 +210,8 @@ function createCard(nameCard, linkImg) {
 
 /* Открытие попапа создания карточки */
 function openPopupAddCard() {
+  clearTextFormMessage();
+  clearClassInputs();
   addPopup(popupAddCard);
 }
 
@@ -227,3 +277,90 @@ function eventsAddEl(item) {
   /* Просмотр картинок из карточки в модальном окне */
   item.querySelector('.card-place__img').addEventListener('click', showImg);
 }
+
+
+/* Принимает аргументы: форму, поле, сообщение ошибки, класс для ошибки в поле, класс который покажет блок с ошибкой */
+const showErrorFields = (formItem, fieldItem, messageError, inputErrorClass, errorClass) => {
+  const blockMessage = formItem.querySelector(`.${fieldItem.id}-error`);
+
+  fieldItem.classList.add(inputErrorClass);
+  blockMessage.textContent = messageError;
+  blockMessage.classList.add(errorClass);
+};
+
+/* Принимает аргументы: форму, поле, класс для ошибки в поле, класс который покажет блок с ошибкой */
+const hideErrorFields = (formItem, fieldItem, inputErrorClass, errorClass) => {
+  const blockMessage = formItem.querySelector(`.${fieldItem.id}-error`);
+
+  fieldItem.classList.remove(inputErrorClass);
+  blockMessage.textContent = '';
+  blockMessage.classList.remove(errorClass);
+};
+
+/* Принимает аргументы: форму, поле, класс для ошибки в поле, класс который покажет блок с ошибкой */
+const switchValidationField = (form, field, inputErrorClass, errorClass) => {
+  if (!field.validity.valid) {
+    showErrorFields(form, field, field.validationMessage, inputErrorClass, errorClass);
+  } else {
+    hideErrorFields(form, field, inputErrorClass, errorClass);
+  }
+};
+
+/* Если поле невалидно вернет true */
+const checkValidationFieldList = (fieldList) => {
+  return fieldList.some(field => !field.validity.valid);
+};
+
+/* Принимает аргументы: все поля в форме, кнопку отправки формы, класс для неактивной кнопки */
+const toggleStateButton = (fieldList, buttonFormSubmit, inactiveButtonClass) => {
+  const invalidTrue = checkValidationFieldList(fieldList);
+
+  if (invalidTrue) {
+    buttonFormSubmit.classList.add(inactiveButtonClass);
+    buttonFormSubmit.disabled = true;
+  } else {
+    buttonFormSubmit.classList.remove(inactiveButtonClass);
+    buttonFormSubmit.disabled = false;
+  }
+};
+
+/* Принимает аргументы: одну форму, весь обьект args */
+const setListenerFieldList = (formItem, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
+  const fieldList = Array.from(formItem.querySelectorAll(inputSelector));
+  const buttonFormSubmit = formItem.querySelector(submitButtonSelector);
+
+  toggleStateButton(fieldList, buttonFormSubmit, inactiveButtonClass);
+
+  fieldList.forEach(field => {
+    switchValidationField(formItem, field, inputErrorClass, errorClass);
+
+    formItem.addEventListener('input', event => {
+      toggleStateButton(fieldList, buttonFormSubmit, inactiveButtonClass);
+      switchValidationField(formItem, field, inputErrorClass, errorClass);
+    });
+  });
+}
+
+/* Оператор spread вытащит все элементы из обьекта */
+const enableValidation = ({formSelector, ...args}) => {
+  const formList = Array.from(document.querySelectorAll(formSelector));
+
+  formList.forEach(formItem => {
+    formItem.addEventListener('submit', event => {
+      event.preventDefault();
+    });
+
+    setListenerFieldList(formItem, args);
+  });
+}
+
+/* Принимает на вход 6 аргументов. Форму для валидации, текстовые поля, кнопку отправки формы, класс неактивной кнопки, класс подсвечивания ошибки в поле, класс показать сообщения об ошибке */
+/* Аргументы у форм, классы одинаковые, поэтому повторно функцию вызывать не нужно */
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input-text',
+  submitButtonSelector: '.button-popup',
+  inactiveButtonClass: 'button-popup_inactive',
+  inputErrorClass: 'popup__form-input-text_type_error',
+  errorClass: 'popup__error-message_active'
+});
