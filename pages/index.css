@@ -46,7 +46,7 @@
 @import url(../blocks/popup/__container/_review/popup__container_review_img.css);
 @import url(../blocks/popup/__form-edit-profile/popup__form-edit-profile.css);
 @import url(../blocks/popup/__form-input-text/popup__form-input-text.css);
-@import url(../blocks/popup/__form-submit-btn/popup__form-submit-btn.css);
+@import url(../blocks/popup/__form-input-text/_type/popup__form-input-text_type_error.css);
 @import url(../blocks/popup/__form-title/popup__form-title.css);
 @import url(../blocks/popup/__form-title/_position/popup__form-title_position_center.css);
 @import url(../blocks/popup/__form/popup__form.css);
@@ -54,3 +54,9 @@
 @import url(../blocks/popup/__img-container/popup__img-container.css);
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__img-text/popup__img-text.css);
+@import url(../blocks/popup/__form-label/popup__form-label.css);
+@import url(../blocks/popup/__error-messag/popup__error-message.css);
+@import url(../blocks/popup/__error-messag/_active/popup__error-message_active.css);
+/* button-popup */
+@import url(../blocks/button-popup/button-popup.css);
+@import url(../blocks/button-popup/_inactive/button-popup_inactive.css);
