@@ -1,27 +1,27 @@
 /* Принимает аргументы: форму, поле, сообщение ошибки, класс для ошибки в поле, класс который покажет блок с ошибкой */
-const showErrorFields = (formItem, fieldItem, messageError, inputErrorClass, errorClass) => {
+const showErrorFields = (formItem, fieldItem, messageError, objConfig) => {
   const blockMessage = formItem.querySelector(`.${fieldItem.id}-error`);
 
-  fieldItem.classList.add(inputErrorClass);
+  fieldItem.classList.add(objConfig.inputErrorClass);
   blockMessage.textContent = messageError;
-  blockMessage.classList.add(errorClass);
+  blockMessage.classList.add(objConfig.errorClass);
 };
 
 /* Принимает аргументы: форму, поле, класс для ошибки в поле, класс который покажет блок с ошибкой */
-const hideErrorFields = (formItem, fieldItem, inputErrorClass, errorClass) => {
+const hideErrorFields = (formItem, fieldItem, objConfig) => {
   const blockMessage = formItem.querySelector(`.${fieldItem.id}-error`);
 
-  fieldItem.classList.remove(inputErrorClass);
+  fieldItem.classList.remove(objConfig.inputErrorClass);
   blockMessage.textContent = '';
-  blockMessage.classList.remove(errorClass);
+  blockMessage.classList.remove(objConfig.errorClass);
 };
 
 /* Принимает аргументы: форму, поле, класс для ошибки в поле, класс который покажет блок с ошибкой */
-const switchValidationField = (form, field, inputErrorClass, errorClass) => {
+const switchValidationField = (form, field, args) => {
   if (!field.validity.valid) {
-    showErrorFields(form, field, field.validationMessage, inputErrorClass, errorClass);
+    showErrorFields(form, field, field.validationMessage, args);
   } else {
-    hideErrorFields(form, field, inputErrorClass, errorClass);
+    hideErrorFields(form, field, args);
   }
 };
 
@@ -31,7 +31,7 @@ const checkValidationFieldList = (fieldList) => {
 };
 
 /* Принимает аргументы: все поля в форме, кнопку отправки формы, класс для неактивной кнопки */
-const toggleStateButton = (fieldList, buttonFormSubmit, inactiveButtonClass) => {
+const toggleStateButton = (fieldList, buttonFormSubmit, {inactiveButtonClass}) => {
   const invalidTrue = checkValidationFieldList(fieldList);
 
   if (invalidTrue) {
@@ -44,18 +44,18 @@ const toggleStateButton = (fieldList, buttonFormSubmit, inactiveButtonClass) => 
 };
 
 /* Принимает аргументы: одну форму, весь обьект args */
-const setListenerFieldList = (formItem, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
+const setListenerFieldList = (formItem, {inputSelector, submitButtonSelector, ...args}) => {
   const fieldList = Array.from(formItem.querySelectorAll(inputSelector));
   const buttonFormSubmit = formItem.querySelector(submitButtonSelector);
 
-  toggleStateButton(fieldList, buttonFormSubmit, inactiveButtonClass);
+  toggleStateButton(fieldList, buttonFormSubmit, args);
 
   fieldList.forEach(field => {
-    switchValidationField(formItem, field, inputErrorClass, errorClass);
+    switchValidationField(formItem, field, args);
 
     formItem.addEventListener('input', event => {
-      toggleStateButton(fieldList, buttonFormSubmit, inactiveButtonClass);
-      switchValidationField(formItem, field, inputErrorClass, errorClass);
+      toggleStateButton(fieldList, buttonFormSubmit, args);
+      switchValidationField(formItem, field, args);
     });
   });
 }
