@@ -1,3 +1,12 @@
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input-text',
+  submitButtonSelector: '.button-popup',
+  inactiveButtonClass: 'button-popup_inactive',
+  inputErrorClass: 'popup__form-input-text_type_error',
+  errorClass: 'popup__error-message_active'
+}
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -82,9 +91,11 @@ function addPopup(popupType) {
   popupType.classList.add('popup_opened');
 }
 
-/* При нажатии на крестик или сохранить, открытый попап закрывается. Принимает параметром событие event, с помощью event узнаем какой попап нужно закрыть, с помощью closest зыкрываем попап дочерней кнопки */
-function removePopup(event) {
-  event.target.closest('.popup').classList.remove('popup_opened');
+/* Принимает аргументом попап у которого нужно удалить класс */
+function removePopup(popupItem) {
+  if (popupItem.classList.contains('popup_opened')) {
+    popupItem.classList.remove('popup_opened');
+  }
 }
 
 /* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
@@ -136,13 +147,14 @@ editBtn.addEventListener('click', openPopupEditProfile);
 
 const checkClassPopup = (positionClick, event) => {
   if (event.target.classList.contains(positionClick)) {
-    removePopup(event);
+    popupItems.forEach(popup => {
+      removePopup(popup);
+    });
   }
 };
 
 /* Принимает атрибутом строку, место на которое кликает пользователь, чтобы закрыть попап */
 const closePopupMouse = positionClick => {
-  /* Событие mousedown, так как неприятно получается зажать и отпустить в не поля, и закрыть попап */
   popupItems.forEach(item => {
     item.addEventListener('mousedown', event => checkClassPopup(positionClick, event));
   });
