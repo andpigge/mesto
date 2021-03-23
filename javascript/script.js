@@ -80,9 +80,16 @@ const hideButtonForm = form => {
   buttonFormSubmit.disabled = true;
 }
 
+/* Показывает кнопку при добавлении в форму текста. Т.к текст в полях уже есть, кнопку надо показывать */
+const showButtonForm = form => {
+  const buttonFormSubmit = form.querySelector(validationConfig.submitButtonSelector);
+  buttonFormSubmit.classList.remove(validationConfig.inactiveButtonClass);
+  buttonFormSubmit.disabled = false;
+}
+
 function clearFormInput(form) {
   form.reset();
-  hideButtonForm(form);
+  //hideButtonForm(form);
 }
 
 
@@ -96,6 +103,9 @@ function editProfile() {
 function editInputValue() {
   inputEditName.value = titleName.textContent;
   inputEditDoes.value = subtitleDoes.textContent;
+
+  /* При добавлении в поля текста, кнопку при этом нужно показывать */
+  showButtonForm(formEditProfile);
 }
 
 /* Очищает текст в с ошибкой в попапе */
