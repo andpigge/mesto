@@ -7,6 +7,10 @@ const validationConfig = {
   errorClass: 'popup__error-message_active'
 }
 
+const popupConfig = {
+  openPopup: '.popup_opened',
+};
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -77,7 +81,6 @@ const blockMessageError = document.querySelectorAll('.popup__error-message');
 /* Все поля в форме */
 const allInputPopup = document.querySelectorAll('.popup__form-input-text');
 
-
 /* Список карточек с местами */
 const place = document.querySelector('.place');
 const placeList = place.querySelector('.place__list');
@@ -93,9 +96,8 @@ function addPopup(popupType) {
 
 /* Принимает аргументом попап у которого нужно удалить класс */
 function removePopup(popupItem) {
-  if (popupItem.classList.contains('popup_opened')) {
-    popupItem.classList.remove('popup_opened');
-  }
+  popupItem.classList.remove('popup_opened');
+  document.removeEventListener('keydown', listenerPopupKey);
 }
 
 /* Очищает форму. Первый параметр формы инпуты которые нужно очистить */
@@ -122,14 +124,14 @@ function editInputValue() {
 const clearTextFormMessage = () => {
   blockMessageError.forEach(block => {
     block.textContent = '';
-    block.classList.remove('popup__form-input-text_type_error');
+    block.classList.remove(validationConfig.errorClass);
   });
 }
 
 /* Удаляет класс со всех инпутов */
 const clearClassInputs = () => {
   allInputPopup.forEach(input => {
-    input.classList.remove('popup__form-input-text_type_error');
+    input.classList.remove(validationConfig.inputErrorClass);
   });
 }
 
@@ -138,18 +140,20 @@ function openPopupEditProfile() {
   clearTextFormMessage();
   clearClassInputs();
 
-  addPopup(popupEditProfile);
+  document.addEventListener('keydown', listenerPopupKey);
 
   editInputValue();
+  addPopup(popupEditProfile);
 }
 
 editBtn.addEventListener('click', openPopupEditProfile);
 
 const checkClassPopup = (positionClick, event) => {
-  if (event.target.classList.contains(positionClick)) {
-    popupItems.forEach(popup => {
-      removePopup(popup);
-    });
+  const openPopup = document.querySelector(popupConfig.openPopup)
+
+  /* Если кликнуть два раза произойдет событие клика во второй раз, так как попап еще не закрылся, поэтому проверяю если в переменной что-то есть, только тогда удаляю класс */
+  if (event.target.classList.contains(positionClick) && openPopup) {
+    removePopup(openPopup);
   }
 };
 
@@ -163,18 +167,12 @@ const closePopupMouse = positionClick => {
 closePopupMouse('popup__btn');
 closePopupMouse('popup');
 
-/* Принимает атрибутом строку, клавишу по которой закрывать попапы */
-const closePopupKey = key => {
-  document.addEventListener('keydown', event => {
-    if (event.key === key) {
-      popupItems.forEach(popup => {
-        popup.classList.remove('popup_opened');
-      });
-    }
-  });
-}
-
-closePopupKey('Escape');
+function listenerPopupKey (event) {
+  if (event.key === 'Escape') {
+    const openPopup = document.querySelector(popupConfig.openPopup)
+    removePopup(openPopup);
+  }
+};
 
 /* Форма редактирования профиля */
 function formSubmitHandlerEditProfile (event) {
@@ -182,7 +180,8 @@ function formSubmitHandlerEditProfile (event) {
 
   editProfile();
 
-  removePopup(event);
+  const openPopup = document.querySelector(popupConfig.openPopup)
+  removePopup(openPopup);
 }
 
 formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
@@ -219,11 +218,11 @@ function createCard(nameCard, linkImg) {
   return placeItem;
 }
 
-
 /* Открытие попапа создания карточки */
 function openPopupAddCard() {
   clearTextFormMessage();
   clearClassInputs();
+  document.addEventListener('keydown', listenerPopupKey);
   addPopup(popupAddCard);
 }
 
@@ -252,7 +251,8 @@ function formSubmitHandlerAddCard (event) {
 
   clearFormInput(inputAddName, inputAddSrcImg);
 
-  removePopup(event);
+  const openPopup = document.querySelector(popupConfig.openPopup)
+  removePopup(openPopup);
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
@@ -267,7 +267,7 @@ function deleteCard(event) {
   event.target.closest('.place__item').remove();
 }
 
-/* Просмотр картинки */
+/* Попап просмотр картинки */
 function showImg(event) {
   imgPopup.src = event.target.src;
 
@@ -276,6 +276,7 @@ function showImg(event) {
 
   imgPopup.alt = titleCard;
 
+  document.addEventListener('keydown', listenerPopupKey);
   addPopup(popupShowImg);
 }
 
