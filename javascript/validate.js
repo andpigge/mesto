@@ -75,11 +75,4 @@ const enableValidation = ({formSelector, ...args}) => {
 
 /* Принимает на вход 6 аргументов. Форму для валидации, текстовые поля, кнопку отправки формы, класс неактивной кнопки, класс подсвечивания ошибки в поле, класс показать сообщения об ошибке */
 /* Аргументы у форм, классы одинаковые, поэтому повторно функцию вызывать не нужно */
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-input-text',
-  submitButtonSelector: '.button-popup',
-  inactiveButtonClass: 'button-popup_inactive',
-  inputErrorClass: 'popup__form-input-text_type_error',
-  errorClass: 'popup__error-message_active'
-});
+enableValidation(validationConfig);

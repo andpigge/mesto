@@ -62,9 +62,17 @@ const placeList = place.querySelector('.place__list');
 const placeListTemplate = document.querySelector('.place-list-template');
 
 
+const listenerPopupKey = event => {
+  if (event.key === 'Escape') {
+    const openPopup = document.querySelector(popupConfig.openPopup)
+    removePopup(openPopup);
+  }
+};
+
 /* Добавляет класс открытия попапа, на переданный в параметрах попап */
 function addPopup(popupType) {
   popupType.classList.add('popup_opened');
+  document.addEventListener('keydown', listenerPopupKey);
 }
 
 /* Принимает аргументом попап у которого нужно удалить класс */
@@ -89,7 +97,7 @@ const showButtonForm = form => {
 
 function clearFormInput(form) {
   form.reset();
-  //hideButtonForm(form);
+  hideButtonForm(form);
 }
 
 
@@ -128,8 +136,6 @@ function openPopupEditProfile() {
   clearTextFormMessage();
   clearClassInputs();
 
-  document.addEventListener('keydown', listenerPopupKey);
-
   editInputValue();
   addPopup(popupEditProfile);
 }
@@ -155,21 +161,13 @@ const closePopupMouse = positionClick => {
 closePopupMouse('popup__btn');
 closePopupMouse('popup');
 
-function listenerPopupKey (event) {
-  if (event.key === 'Escape') {
-    const openPopup = document.querySelector(popupConfig.openPopup)
-    removePopup(openPopup);
-  }
-};
-
 /* Форма редактирования профиля */
 function formSubmitHandlerEditProfile (event) {
   event.preventDefault();
 
   editProfile();
 
-  const openPopup = document.querySelector(popupConfig.openPopup)
-  removePopup(openPopup);
+  removePopup(popupEditProfile);
 }
 
 formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
@@ -210,7 +208,6 @@ function createCard(nameCard, linkImg) {
 function openPopupAddCard() {
   clearTextFormMessage();
   clearClassInputs();
-  document.addEventListener('keydown', listenerPopupKey);
   addPopup(popupAddCard);
 }
 
@@ -233,8 +230,7 @@ function formSubmitHandlerAddCard (event) {
 
   clearFormInput(formAddCard);
 
-  const openPopup = document.querySelector(popupConfig.openPopup)
-  removePopup(openPopup);
+  removePopup(popupAddCard);
 }
 
 formAddCard.addEventListener('submit', formSubmitHandlerAddCard);
@@ -258,7 +254,6 @@ function showImg(event) {
 
   imgPopup.alt = titleCard;
 
-  document.addEventListener('keydown', listenerPopupKey);
   addPopup(popupShowImg);
 }
 
