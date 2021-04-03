@@ -199,21 +199,6 @@ function formSubmitHandlerEditProfile (event) {
 
 formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
 
-
-/* При загрузке страницы данные в карточки заносятся из массива */
-showCards(initialCards, placeList);
-
-/* Клонирует элемент шаблона, и выводит в карточку с местами, данные из массива */
-function showCards(arrCardList, container) {
-  arrCardList.forEach(item => {
-    /* В переменную присваивается возвращаемое значение функции */
-    const placeItem = createCard(item.name, item.link);
-
-    /* Добавляется узел в верстку */
-    container.append(placeItem);
-  });
-}
-
 /* Создаст одну карточку с местами. Принимает в параметры имя карточки, и ссылку на картинку */
 function createCard(nameCard, linkImg) {
   const placeItem = placeListTemplate.content.querySelector('.place__item').cloneNode('true');
