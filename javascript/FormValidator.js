@@ -31,7 +31,7 @@ class FormValidator {
     /* Блок с сообщением. Связываем с формой */
     const blockMessage = formItem.querySelector(`.${field.id}-error`);
 
-    if (!field.validity.valid) {
+    if (this._invalidFieldTrue) {
       this._showErrorFields(field, blockMessage);
     } else {
       this._hideErrorFields(field, blockMessage);
@@ -49,19 +49,32 @@ class FormValidator {
     this._invalidFieldTrue = this._checkValidationFieldList(fieldList);
 
     if (this._invalidFieldTrue) {
-      buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = true;
+      this._buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
+      this._buttonFormSubmit.disabled = true;
+
+      /* Заработает */
+      /* buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
+      buttonFormSubmit.disabled = true; */
     } else {
-      buttonFormSubmit.classList.remove(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = false;
+      this._buttonFormSubmit.classList.remove(this._objValidConfig.inactiveButtonClass);
+      this._buttonFormSubmit.disabled = false;
+
+      /* Заработает */
+      /* buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
+      buttonFormSubmit.disabled = true; */
     }
   }
 
   _setListenerFieldList(formItem) {
     /* Ищу все текстовые поля одной формы */
     const fieldList = Array.from(formItem.querySelectorAll(this._objValidConfig.inputSelector));
+
     /* Ищу кнопку отправки формы на сервер */
-    const buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
+    /* Если раскомментировать переменную, почти все заработает */
+    // const buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
+
+    /* Запишу кнопку в свойство, все сломается */
+    this._buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
 
     this._toggleStateButton(buttonFormSubmit, fieldList);
 
