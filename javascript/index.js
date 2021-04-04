@@ -1,3 +1,30 @@
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__form-input-text',
@@ -97,7 +124,7 @@ const showButtonForm = form => {
 
 function clearFormInput(form) {
   form.reset();
-  hideButtonForm(form);
+  // hideButtonForm(form);
 }
 
 
@@ -113,7 +140,7 @@ function editInputValue() {
   inputEditDoes.value = subtitleDoes.textContent;
 
   /* При добавлении в поля текста, кнопку при этом нужно показывать */
-  showButtonForm(formEditProfile);
+  // showButtonForm(formEditProfile);
 }
 
 /* Очищает текст в с ошибкой в попапе */
@@ -171,21 +198,6 @@ function formSubmitHandlerEditProfile (event) {
 }
 
 formEditProfile.addEventListener('submit', formSubmitHandlerEditProfile);
-
-
-/* При загрузке страницы данные в карточки заносятся из массива */
-showCards(initialCards, placeList);
-
-/* Клонирует элемент шаблона, и выводит в карточку с местами, данные из массива */
-function showCards(arrCardList, container) {
-  arrCardList.forEach(item => {
-    /* В переменную присваивается возвращаемое значение функции */
-    const placeItem = createCard(item.name, item.link);
-
-    /* Добавляется узел в верстку */
-    container.append(placeItem);
-  });
-}
 
 /* Создаст одну карточку с местами. Принимает в параметры имя карточки, и ссылку на картинку */
 function createCard(nameCard, linkImg) {

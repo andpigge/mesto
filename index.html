@@ -107,7 +107,6 @@
   <template class="place-list-template">
     <li class="place__item">
       <div class="card-place">
-        <!-- Надо попросить у дизайнера чтобы на кнопку добавил тень, не видно кнопку на белом -->
         <button class="card-place__delete-btn"></button>
         <img src="./images/card-place-img-1.jpg" alt="Картинка отсуствует" class="card-place__img">
         <h2 class="card-place__title">
@@ -120,8 +119,9 @@
     <!-- /.place__item -->
   </template>
 
-  <script src="./javascript/initial-сards.js"></script>
-  <script src="./javascript/script.js"></script>
-  <script src="./javascript/validate.js"></script>
+  <script src="./javascript/index.js"></script>
+  <!-- <script src="./javascript/validate.js"></script> -->
+  <script type="module" src="./javascript/Card.js"></script>
+  <script type="module" src="./javascript/FormValidator.js"></script>
 </body>
 </html>
