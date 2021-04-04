@@ -124,7 +124,7 @@ const showButtonForm = form => {
 
 function clearFormInput(form) {
   form.reset();
-  hideButtonForm(form);
+  // hideButtonForm(form);
 }
 
 
@@ -140,7 +140,7 @@ function editInputValue() {
   inputEditDoes.value = subtitleDoes.textContent;
 
   /* При добавлении в поля текста, кнопку при этом нужно показывать */
-  showButtonForm(formEditProfile);
+  // showButtonForm(formEditProfile);
 }
 
 /* Очищает текст в с ошибкой в попапе */
