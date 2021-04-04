@@ -81,6 +81,7 @@ class Card {
   }
 
   _eventListenerPopup({target}) {
+    /* Делегирование событий */
     if (target.classList.contains(this._infoPopup.buttonClose)) {
       this._removeClassPopup();
     } else if (target.classList.contains(this._infoPopup.namePopup.slice(1))) {

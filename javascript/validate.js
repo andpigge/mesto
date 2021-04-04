@@ -27,7 +27,10 @@ const switchValidationField = (form, field, args) => {
 
 /* Если поле невалидно вернет true */
 const checkValidationFieldList = (fieldList) => {
-  return fieldList.some(field => !field.validity.valid);
+  return fieldList.some(field => {
+    console.log(field)
+    return !field.validity.valid
+  });
 };
 
 /* Принимает аргументы: все поля в форме, кнопку отправки формы, класс для неактивной кнопки */
