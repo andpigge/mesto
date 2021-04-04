@@ -103,12 +103,14 @@ function addPopup(popupType) {
 }
 
 /* Принимает аргументом попап у которого нужно удалить класс */
+/* Функция манипулирует с кнопкой у попапа, относиться к валидации, но переноситься не может */
 function removePopup(popupItem) {
   popupItem.classList.remove('popup_opened');
   document.removeEventListener('keydown', listenerPopupKey);
 }
 
 /* Скрывает кнопку при очистке полей. Т.к поля очищаются, нужно при этом скрывать кнопку */
+/* Функция манипулирует с кнопкой у попапа, относиться к валидации, но переноситься не может */
 const hideButtonForm = form => {
   const buttonFormSubmit = form.querySelector(validationConfig.submitButtonSelector);
   buttonFormSubmit.classList.add(validationConfig.inactiveButtonClass);
@@ -124,7 +126,7 @@ const showButtonForm = form => {
 
 function clearFormInput(form) {
   form.reset();
-  // hideButtonForm(form);
+  hideButtonForm(form);
 }
 
 
@@ -140,7 +142,7 @@ function editInputValue() {
   inputEditDoes.value = subtitleDoes.textContent;
 
   /* При добавлении в поля текста, кнопку при этом нужно показывать */
-  // showButtonForm(formEditProfile);
+  showButtonForm(formEditProfile);
 }
 
 /* Очищает текст в с ошибкой в попапе */
