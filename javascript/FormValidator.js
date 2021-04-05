@@ -39,39 +39,41 @@ class FormValidator {
   };
 
   /* Если поле невалидно вернет true */
-  _checkValidationFieldList(fieldList) {
-    return fieldList.some(field => !field.validity.valid);
+  _checkValidationFieldList() {
+    return this._fieldList.some(field => !field.validity.valid);
   }
 
-  _toggleStateButton(buttonFormSubmit, fieldList) {
-    this._invalidFieldTrue = this._checkValidationFieldList(fieldList);
+  _toggleStateButton() {
+    this._invalidFieldTrue = this._checkValidationFieldList(this._fieldList);
 
     if (this._invalidFieldTrue) {
-      buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = true;
+      this._buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
+      this._buttonFormSubmit.disabled = true;
     } else {
-      buttonFormSubmit.classList.remove(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = false;
+      this._buttonFormSubmit.classList.remove(this._objValidConfig.inactiveButtonClass);
+      this._buttonFormSubmit.disabled = false;
     }
   }
 
   _setListenerFieldList(formItem) {
     /* Ищу все текстовые поля одной формы */
-    const fieldList = Array.from(formItem.querySelectorAll(this._objValidConfig.inputSelector));
+    /* Записываю в свойство _fieldList все текстовые инпуты формы */
+    this._fieldList = Array.from(formItem.querySelectorAll(this._objValidConfig.inputSelector));
 
     /* Ищу кнопку отправки формы на сервер */
-    const buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
+    /* Записываю в свойство _buttonFormSubmit кнопку формы */
+    this._buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
 
-    this._toggleStateButton(buttonFormSubmit, fieldList);
+    this._toggleStateButton();
 
     /* Поле нужно чтобы его подсвечивать, и выводить ошибку */
-    fieldList.forEach(field => {
+    this._fieldList.forEach(field => {
 
       this._switchValidationField(field, formItem);
 
       formItem.addEventListener('input', event => {
 
-        this._toggleStateButton(buttonFormSubmit, fieldList);
+        this._toggleStateButton();
         this._switchValidationField(field, formItem);
       });
     });
