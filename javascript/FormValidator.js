@@ -1,7 +1,6 @@
 /* Для каждой формы validationConfig свой, можно вынести в отдельный файл, если обьектов станет много */
 /* Сразу обрабатывать обьект удобнее, чем по отдельности указывать селектор формы */
 const validationConfig = {
-  formSelector: '.popup__form',
   inputSelector: '.popup__form-input-text',
   submitButtonSelector: '.button-popup',
   inactiveButtonClass: 'button-popup_inactive',
@@ -10,88 +9,103 @@ const validationConfig = {
 }
 
 class FormValidator {
-  constructor({formSelector, ...objValidConfig}) {
+  constructor(objValidConfig, formSelector) {
     this._formSelector = formSelector;
     this._objValidConfig = objValidConfig;
   }
 
-  _showErrorFields(field, blockMessage) {
+  _showErrorFields(field) {
+    /* Блок с сообщением. Связываем с формой */
+    const blockMessage = this._formItem.querySelector(`.${field.id}-error`);
+
     field.classList.add(this._objValidConfig.inputErrorClass);
     blockMessage.textContent = field.validationMessage;
     blockMessage.classList.add(this._objValidConfig.errorClass);
   };
 
-  _hideErrorFields(field, blockMessage) {
+  _hideErrorFields(field) {
+    /* Блок с сообщением. Связываем с формой */
+    /* Пришлось повторить переменную, со свойством класса не работает */
+    const blockMessage = this._formItem.querySelector(`.${field.id}-error`);
+
     field.classList.remove(this._objValidConfig.inputErrorClass);
     blockMessage.textContent = '';
     blockMessage.classList.remove(this._objValidConfig.errorClass);
   };
 
-  _switchValidationField(field, formItem) {
-    /* Блок с сообщением. Связываем с формой */
-    const blockMessage = formItem.querySelector(`.${field.id}-error`);
-
-    if (this._invalidFieldTrue) {
-      this._showErrorFields(field, blockMessage);
+  _switchValidationField(field) {
+    if (!field.validity.valid) {
+      this._showErrorFields(field);
     } else {
-      this._hideErrorFields(field, blockMessage);
+      this._hideErrorFields(field);
     }
   };
 
   /* Если поле невалидно вернет true */
-  _checkValidationFieldList(fieldList) {
-    return fieldList.some(field => !field.validity.valid);
+  _checkValidationFieldList() {
+    return this._fieldList.some(field => !field.validity.valid);
   }
 
-  _toggleStateButton(buttonFormSubmit, fieldList) {
-    this._invalidFieldTrue = this._checkValidationFieldList(fieldList);
+  _toggleStateButton() {
+    this._invalidFieldTrue = this._checkValidationFieldList();
 
     if (this._invalidFieldTrue) {
-      buttonFormSubmit.classList.add(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = true;
+      this._submitButton.classList.add(this._objValidConfig.inactiveButtonClass);
+      this._submitButton.disabled = true;
     } else {
-      buttonFormSubmit.classList.remove(this._objValidConfig.inactiveButtonClass);
-      buttonFormSubmit.disabled = false;
+      this._submitButton.classList.remove(this._objValidConfig.inactiveButtonClass);
+      this._submitButton.disabled = false;
     }
   }
 
-  _setListenerFieldList(formItem) {
+  _setListenerFieldList() {
     /* Ищу все текстовые поля одной формы */
-    const fieldList = Array.from(formItem.querySelectorAll(this._objValidConfig.inputSelector));
+    this._fieldList = Array.from(this._formItem.querySelectorAll(this._objValidConfig.inputSelector));
 
     /* Ищу кнопку отправки формы на сервер */
-    const buttonFormSubmit = formItem.querySelector(this._objValidConfig.submitButtonSelector);
+    this._submitButton = this._formItem.querySelector(this._objValidConfig.submitButtonSelector);
 
-    this._toggleStateButton(buttonFormSubmit, fieldList);
+    this._toggleStateButton();
 
     /* Поле нужно чтобы его подсвечивать, и выводить ошибку */
-    fieldList.forEach(field => {
+    this._fieldList.forEach(field => {
 
-      this._switchValidationField(field, formItem);
+      /* Свойства класса не дружат с циклами, они не перезаписываются при каждом каждом проходе цикла, а оставляют старое значение
+      this._field как свойство класса здесь не подойдет, так как присуствует цикл */
 
-      formItem.addEventListener('input', event => {
+      this._switchValidationField(field);
 
-        this._toggleStateButton(buttonFormSubmit, fieldList);
-        this._switchValidationField(field, formItem);
+      this._formItem.addEventListener('input', event => {
+
+        this._toggleStateButton();
+        this._switchValidationField(field);
       });
     });
+  }
+
+  /* Публичный метод */
+  resetValidation() {
+    this._fieldList.forEach(field => {
+      this._hideErrorFields(field);
+    })
+    this._toggleStateButton();
   }
 
   enableValidation() {
     /* Ищу все формы с переданным селектором в параметрах */
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
+    this._formItem = document.querySelector(this._formSelector);
 
-    formList.forEach(formItem => {
-
-      formItem.addEventListener('submit', event => {
-        event.preventDefault();
-      });
-
-      /* Валидируем каждую форму из цикла */
-      this._setListenerFieldList(formItem);
+    this._formItem.addEventListener('submit', event => {
+      event.preventDefault();
     });
+
+    /* Валидируем каждую форму из цикла */
+    this._setListenerFieldList();
   }
 }
 
-const formVadidation = new FormValidator(validationConfig);
-formVadidation.enableValidation();
+/* Экземпляры понадобятся в другом модуле, так как в нем будет задействована валидация */
+export const createCardVadidation = new FormValidator(validationConfig, '.popup__form_create_card');
+createCardVadidation.enableValidation();
+export const editProfileVadidation = new FormValidator(validationConfig, '.popup__form_edit_profile');
+editProfileVadidation.enableValidation();

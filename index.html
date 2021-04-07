@@ -47,7 +47,7 @@
     <div class="popup__container">
       <button class="popup__btn" type="button"></button>
       <!-- Не отключал валидацию novalidate, так как пользователь можем отключить js -->
-      <form class="popup__form" name="edit-profile">
+      <form class="popup__form popup__form_edit_profile" name="edit-profile">
         <h2 class="popup__form-title popup__form-title_position_center">
           Редактировать профиль
         </h2>
@@ -70,7 +70,7 @@
   <div class="popup popup_add_card">
     <div class="popup__container">
       <button class="popup__btn" type="button"></button>
-      <form class="popup__form" name="edit-profile">
+      <form class="popup__form popup__form_create_card" name="create-card">
         <h2 class="popup__form-title">
           Новое место
         </h2>
@@ -119,7 +119,7 @@
     <!-- /.place__item -->
   </template>
 
-  <script src="./javascript/index.js"></script>
+  <script type="module" src="./javascript/index.js"></script>
   <script type="module" src="./javascript/Card.js"></script>
   <script type="module" src="./javascript/FormValidator.js"></script>
 </body>
