@@ -1,8 +1,10 @@
+import {infoTemplatePlace} from '../utils/constants.js';
+
 export default class Card {
-  constructor(objInitialCards, {name, ...objInfoTemplate}, handleCardClick) {
-    this._template = name;
+  constructor(objInitialCards, handleCardClick) {
+    this._objInfoTemplate = infoTemplatePlace;
+    this._template = this._objInfoTemplate.name;
     this._objInitialCards = objInitialCards;
-    this._objInfoTemplate = objInfoTemplate;
     this._handleCardClick = handleCardClick;
   }
 
@@ -39,6 +41,7 @@ export default class Card {
 
     /* События */
     this._cardTemplate.addEventListener('click', event => this._eventListenerCard(event));
+
     this._cardTemplate.querySelector('.card-place__img').addEventListener('click', () => this._handleCardClick(this._objInitialCards.name, this._objInitialCards.link));
 
     return this._cardTemplate;
