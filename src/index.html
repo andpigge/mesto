@@ -6,19 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Места России</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 </head>
 <body class="page">
   <header class="header page__position-center page__header">
     <a href="#" target="_self" class="header__link">
-      <img src="./images/logo.svg" alt="Место Россия" class="header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Место Россия" class="header__logo">
     </a>
     <!-- /.header__link -->
   </header>
   <!-- /.header -->
   <main class="content">
     <section class="profile content__position-center content__profile">
-      <img src="./images/profile-image.jpg" alt="Портрет" class="profile__img">
+      <img src="<%=require('./images/profile-image.jpg')%>" alt="Портрет" class="profile__img">
       <div class="profile__about">
         <div class="profile__container-text">
           <h1 class="profile__title-name">Жак-Ив Кусто</h1>
@@ -75,11 +75,11 @@
           Новое место
         </h2>
         <label class="popup__form-label">
-          <input type="text" class="popup__form-input-text popup__form-input-text_value_name" id="place-name-input" placeholder="Название" name="place-name" minlength="2" maxlength="30" required>
+          <input type="text" class="popup__form-input-text popup__form-place-name-input" id="place-name-input" placeholder="Название" name="place-name" minlength="2" maxlength="30" required>
           <span class="popup__error-message popup__error-message_active place-name-input-error"></span>
         </label>
         <label class="popup__form-label">
-          <input type="url" class="popup__form-input-text popup__form-input-text_value_does" placeholder="Ссылка на картинку" id="place-img-input" name="place-img" required>
+          <input type="url" class="popup__form-input-text popup__form-place-img-input" placeholder="Ссылка на картинку" id="place-img-input" name="place-img" required>
           <span class="popup__error-message place-img-input-error"></span>
         </label>
         <button class="button-popup" type="submit">
@@ -108,7 +108,7 @@
     <li class="place__item">
       <div class="card-place">
         <button class="card-place__delete-btn"></button>
-        <img src="./images/card-place-img-1.jpg" alt="Картинка отсуствует" class="card-place__img">
+        <img src="<%=require('./images/card-place-img-1.jpg')%>" alt="Картинка отсуствует" class="card-place__img">
         <h2 class="card-place__title">
           Карачаево-Черкессия
         </h2>
@@ -119,8 +119,8 @@
     <!-- /.place__item -->
   </template>
 
-  <script type="module" src="./javascript/index.js"></script>
-  <script type="module" src="./javascript/Card.js"></script>
-  <script type="module" src="./javascript/FormValidator.js"></script>
+  <!-- <script type="module" src="./javascript/pages/index.js"></script>
+  <script type="module" src="./javascript/components/Card.js"></script>
+  <script type="module" src="./javascript/FormValidator.js"></script> -->
 </body>
 </html>

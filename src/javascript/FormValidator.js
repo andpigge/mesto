@@ -1,12 +1,4 @@
-/* Для каждой формы validationConfig свой, можно вынести в отдельный файл, если обьектов станет много */
-/* Сразу обрабатывать обьект удобнее, чем по отдельности указывать селектор формы */
-const validationConfig = {
-  inputSelector: '.popup__form-input-text',
-  submitButtonSelector: '.button-popup',
-  inactiveButtonClass: 'button-popup_inactive',
-  inputErrorClass: 'popup__form-input-text_type_error',
-  errorClass: 'popup__error-message_active'
-}
+import {validationConfig} from './utils/constants.js';
 
 class FormValidator {
   constructor(objValidConfig, formSelector) {

@@ -1,0 +1,39 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "Интерактивная страница. Позволяет изменять имя и деятельность в профиле, с помощью формы в модальном окне",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andpigge/mesto.git"
+  },
+  "keywords": [
+    "Приложение",
+    "Интерактивная страница"
+  ],
+  "author": "Rustamaaaa@bk.ru",
+  "license": "ISC",
+  "homepage": "https://github.com/andpigge/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "autoprefixer": "^10.2.5",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.4",
+    "cssnano": "^5.0.1",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.5.0",
+    "npm": "^7.10.0",
+    "postcss-loader": "^5.2.0",
+    "serve": "^11.3.2",
+    "webpack": "^5.34.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
