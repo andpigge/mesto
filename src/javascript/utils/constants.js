@@ -25,6 +25,13 @@ const initialCards = [
   }
 ];
 
+// Блок profile
+const profile = document.querySelector('.profile');
+// Кнопка редактировать данные из профиля
+const editBtn = profile.querySelector('.profile__edit-btn');
+/* Кнопка добавляет карточки с местами */
+const btnAddCard = profile.querySelector('.profile__add-card-place');
+
 /* Этот обьект для каждого шаблона свой */
 const infoTemplatePlace = {
   name: '.place-list-template',
@@ -63,8 +70,8 @@ const infoPopupAddCard = {
   buttonCloseSelector: '.popup__btn',
 
   popupFormSelector: '.popup__form_create_card',
-  popupFormfieldNameSelector: '.popup__form-input-text_value_name',
-  popupFormfieldDoesSelector: '.popup__form-input-text_value_does',
+  popupFormfieldNameSelector: '.popup__form-place-name-input',
+  popupFormfieldDoesSelector: '.popup__form-place-img-input',
 };
 
 const selectorInfoUser = {
@@ -83,4 +90,4 @@ const validationConfig = {
   errorClass: 'popup__error-message_active'
 }
 
-export {initialCards, infoTemplatePlace, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, selectorInfoUser, validationConfig};
+export {initialCards, infoTemplatePlace, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, selectorInfoUser, validationConfig, editBtn, btnAddCard};

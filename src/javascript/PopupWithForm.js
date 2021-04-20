@@ -24,10 +24,8 @@ export default class PopupWithForm extends Popup {
 
   // Чтобы не использовать в index.js готовую функцию, я предпочел заполнять форму здесь
   formFill(nameSelectorText, doesInfoSelectorText) {
-    console.log(nameSelectorText, doesInfoSelectorText)
     this._fieldOne.value = nameSelectorText;
     this._fieldTwo.value = doesInfoSelectorText;
-    console.log(this._fieldOne.value, this._fieldTwo.value)
   }
 
   setEventListeners() {

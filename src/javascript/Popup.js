@@ -16,6 +16,12 @@ export default class Popup {
     document.removeEventListener('keydown', (event) => this._handleEscClose(event));
   }
 
+  _closeInPopup(event) {
+    if (event.target === this._popup) {
+      this.close();
+    }
+  }
+
   _handleEscClose(event) {
     if (event.key === 'Escape') {
       this.close();
@@ -23,6 +29,7 @@ export default class Popup {
   }
 
   setEventListeners() {
-    this._buttonClose.addEventListener('click', this.close.bind(this))
+    this._buttonClose.addEventListener('click', this.close.bind(this));
+    this._popup.addEventListener('mousedown', this._closeInPopup.bind(this));
   }
 }
