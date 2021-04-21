@@ -2,14 +2,17 @@ import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
   constructor(selectorPopup,
-    {popupFormSelector, popupFormfieldNameSelector, popupFormfieldDoesSelector, ...objInfo},
+    {popupFormSelector, popupFormfieldsSelector, ...objInfo},
     formSubmitHandlerAddCard)
   {
     super(selectorPopup, objInfo);
     this._formSubmitHandlerAddCard = formSubmitHandlerAddCard;
     this._form = this._popup.querySelector(popupFormSelector);
-    this._fieldOne = this._form.querySelector(popupFormfieldNameSelector);
-    this._fieldTwo = this._form.querySelector(popupFormfieldDoesSelector);
+    this._popupFormfieldsSelector = popupFormfieldsSelector;
+
+    this._objInfo = objInfo;
+
+    this._getInputValues = this._getInputValues.bind(this)
   }
 
   close() {
@@ -18,22 +21,30 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    this._fieldOneValue = this._fieldOne.value;
-    this._fieldTwoValue = this._fieldTwo.value;
+    this._inputList = Array.from(this._form.querySelectorAll(this._popupFormfieldsSelector));
+    this.formValues = this._inputList.reduce((acc, item) => {
+      acc[item.name] = item.value;
+
+      return acc;
+    }, {});
+    return this.formValues;
   }
 
   // Чтобы не использовать в index.js готовую функцию, я предпочел заполнять форму здесь
   formFill(nameSelectorText, doesInfoSelectorText) {
-    this._fieldOne.value = nameSelectorText;
-    this._fieldTwo.value = doesInfoSelectorText;
+    this._form.querySelector(this._objInfo.popupFormfieldNameSelector).value = nameSelectorText;
+    this._form.querySelector(this._objInfo.popupFormfieldDoesSelector).value = doesInfoSelectorText;
+  }
+
+  // Чтобы выставить event.preventDefault для всех форм кнопок отправки
+  _submitForm(event) {
+    event.preventDefault()
+    this._formSubmitHandlerAddCard(this._getInputValues())
   }
 
   setEventListeners() {
     super.setEventListeners();
-    // У метода _getInputValues this -> windows. У windows нет свойства _form. This это текущий класс.
-    /* Так как _getInputValues вызывается локально в классе, то пришлось 2 раза слушать события, двух разных обработчиков, хотя можно было обьеденить два обработчика события в одну функцию, тоесть вызвать в функции колбек. */
-    this._form.addEventListener('submit', this._getInputValues.bind(this));
-    // event теряется если использовать его внутри колбека класса
-    this._form.addEventListener('submit', (event) => this._formSubmitHandlerAddCard(event, this._fieldOneValue, this._fieldTwoValue));
+    this._form.addEventListener('submit', this._getInputValues);
+    this._form.addEventListener('submit', () => this._formSubmitHandlerAddCard(this._getInputValues()));
   }
 }

@@ -12,24 +12,24 @@ import PopupWithImage from '../PopupWithImage.js';
 import PopupWithForm from '../PopupWithForm.js';
 import UserInfo from '../UserInfo.js';
 
-import {initialCards, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, selectorInfoUser, editBtn, btnAddCard} from '../utils/constants.js';
+import {initialCards, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, selectorInfoUser, editBtn, btnAddCard, infoTemplatePlace} from '../utils/constants.js';
 
 
 // Класс вывод и просмотр попапа с карточками внутри
 const cardPlace = new Section({initialCards, renderer: objItem => {
-  const templateCardPlace = new Card(objItem, handleCardClick);
+  const templateCardPlace = new Card(objItem, infoTemplatePlace, handleCardClick);
   cardPlace.addItem(templateCardPlace.fillCardTemplate());
 }}, '.place__list');
 
 cardPlace.renderItems();
 
+const popupWithImage =  new PopupWithImage('.popup_review_img', infoPopupReviewImg);
+popupWithImage.setEventListeners();
+
 function handleCardClick(name, link) {
-  const popupWithImage =  new PopupWithImage('.popup_review_img', infoPopupReviewImg);
-  popupWithImage.setEventListeners();
   popupWithImage.open(name, link);
 }
 // *
-
 
 // Классы попапов с формой
 const popupFormAddCard = new PopupWithForm('.popup_add_card', infoPopupAddCard, formSubmitHandlerAddCard);
@@ -58,10 +58,8 @@ function openPopupEditProfule(popup) {
 btnAddCard.addEventListener('click', () => openPopupAddCard(popupFormAddCard));
 editBtn.addEventListener('click', () => openPopupEditProfule(popupFormEditProfule));
 
-function formSubmitHandlerAddCard(event, nameValueForm, doesValueForm) {
-  event.preventDefault();
-
-  const templateCardPlace = new Card({name: nameValueForm, link: doesValueForm}, handleCardClick);
+function formSubmitHandlerAddCard({placeImg, placeName}) {
+  const templateCardPlace = new Card({name: placeName, link: placeImg}, infoTemplatePlace, handleCardClick);
 
   cardPlace.addItem(templateCardPlace.fillCardTemplate());
 
@@ -73,53 +71,9 @@ function formSubmitHandlerAddCard(event, nameValueForm, doesValueForm) {
 // Класс информация о пользователе
 const userInfo = new UserInfo(selectorInfoUser);
 
-function formSubmitHandlerEditProfile(event, nameValueForm, doesValueForm) {
-  event.preventDefault();
-
-  userInfo.setUserInfo({nameValueForm, doesValueForm});
+function formSubmitHandlerEditProfile(formValues) {
+  userInfo.setUserInfo(formValues);
 
   popupFormEditProfule.close();
 }
 // *
-
-
-// Эта куча кода отвечает за клик по свободной области, для закрытия попапов. В ТЗ этот пункт не прописан, поэтому код пока оставил.
-// /* Общий класс попапов */
-// const popupItems = document.querySelectorAll('.popup');
-
-// const popupConfig = {
-//   openPopup: '.popup_opened',
-// };
-
-// const listenerPopupKey = event => {
-//   if (event.key === 'Escape') {
-//     const openPopup = document.querySelector(popupConfig.openPopup)
-//     removePopup(openPopup);
-//   }
-// };
-
-// /* Принимает аргументом попап у которого нужно удалить класс */
-// /* Функция манипулирует с кнопкой у попапа, относиться к валидации, но переноситься не может */
-// function removePopup(popupItem) {
-//   popupItem.classList.remove('popup_opened');
-//   document.removeEventListener('keydown', listenerPopupKey);
-// }
-
-// const checkClassPopup = (positionClick, event) => {
-//   const openPopup = document.querySelector(popupConfig.openPopup)
-
-//   /* Если кликнуть два раза произойдет событие клика во второй раз, так как попап еще не закрылся, поэтому проверяю если в переменной что-то есть, только тогда удаляю класс */
-//   if (event.target.classList.contains(positionClick) && openPopup) {
-//     removePopup(openPopup);
-//   }
-// };
-
-
-// /* Принимает атрибутом строку, место на которое кликает пользователь, чтобы закрыть попап */
-// const closePopupMouse = positionClick => {
-//   popupItems.forEach(item => {
-//     item.addEventListener('mousedown', event => checkClassPopup(positionClick, event));
-//   });
-// };
-
-// closePopupMouse('popup');

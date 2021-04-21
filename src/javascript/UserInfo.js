@@ -1,18 +1,17 @@
 export default class UserInfo {
-  constructor({nameSelector, doesInfoSelector, nameProfileSelector}) {
-    // Чтоб не искать лишнее, добавил основной контейнер
-    this.nameProfileSelector = document.querySelector(nameProfileSelector)
-    this._nameSelector = this.nameProfileSelector.querySelector(nameSelector);
-    this._doesInfoSelector = this.nameProfileSelector.querySelector(doesInfoSelector);
+  constructor({nameSelector, doesInfoSelector, profileSelector}) {
+    /* Я согласен что контейнер здесь лишний, но мне проще ориентироваться по коду, когда есть от чего отталкиваться. То есть структура кода более понятно. Возможно в будущем, но сейчас я не готов. */
+    this._profile = document.querySelector(profileSelector)
+    this._name = this._profile.querySelector(nameSelector);
+    this._doesInfo = this._profile.querySelector(doesInfoSelector);
   }
 
   getUserInfo() {
-    // Вернуть лучше бы массив
-    return {nameSelectorText: this._nameSelector.textContent, doesInfoSelectorText: this._doesInfoSelector.textContent};
+    return {nameSelectorText: this._name.textContent, doesInfoSelectorText: this._doesInfo.textContent};
   }
 
-  setUserInfo({nameValueForm, doesValueForm}) {
-    this._nameSelector.textContent = nameValueForm;
-    this._doesInfoSelector.textContent = doesValueForm;
+  setUserInfo({profileName, profileDoes}) {
+    this._name.textContent = profileName;
+    this._doesInfo.textContent = profileDoes;
   }
 }

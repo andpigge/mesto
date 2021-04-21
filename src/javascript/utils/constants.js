@@ -34,12 +34,12 @@ const btnAddCard = profile.querySelector('.profile__add-card-place');
 
 /* Этот обьект для каждого шаблона свой */
 const infoTemplatePlace = {
-  name: '.place-list-template',
-  cardItem: '.place__item',
-  cardTitle: '.card-place__title',
-  cardImg: '.card-place__img',
-  buttonDeleteCard: 'card-place__delete-btn',
-  buttonLikeCard: 'card-place__like-btn',
+  nameSelector: '.place-list-template',
+  cardItemSelector: '.place__item',
+  cardTitleSelector: '.card-place__title',
+  cardImgSelector: '.card-place__img',
+  buttonDeleteCardSelector: '.card-place__delete-btn',
+  buttonLikeCardSelector: '.card-place__like-btn',
   buttonLikeCardActive: 'card-place__like-btn_active',
 };
 
@@ -60,6 +60,8 @@ const infoPopupEditProfile = {
   buttonCloseSelector: '.popup__btn',
 
   popupFormSelector: '.popup__form_edit_profile',
+  popupFormfieldsSelector: '.popup__form-input',
+
   popupFormfieldNameSelector: '.popup__form-input-text_value_name',
   popupFormfieldDoesSelector: '.popup__form-input-text_value_does',
 };
@@ -70,12 +72,11 @@ const infoPopupAddCard = {
   buttonCloseSelector: '.popup__btn',
 
   popupFormSelector: '.popup__form_create_card',
-  popupFormfieldNameSelector: '.popup__form-place-name-input',
-  popupFormfieldDoesSelector: '.popup__form-place-img-input',
+  popupFormfieldsSelector: '.popup__form-input',
 };
 
 const selectorInfoUser = {
-  nameProfileSelector: '.profile__about',
+  profileSelector: '.profile__about',
   nameSelector: '.profile__title-name',
   doesInfoSelector: '.profile__subtitle-does',
 };
@@ -83,7 +84,7 @@ const selectorInfoUser = {
 /* Для каждой формы validationConfig свой, можно вынести в отдельный файл, если обьектов станет много */
 /* Сразу обрабатывать обьект удобнее, чем по отдельности указывать селектор формы */
 const validationConfig = {
-  inputSelector: '.popup__form-input-text',
+  inputSelector: '.popup__form-input',
   submitButtonSelector: '.button-popup',
   inactiveButtonClass: 'button-popup_inactive',
   inputErrorClass: 'popup__form-input-text_type_error',
