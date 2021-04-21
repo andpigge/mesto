@@ -62,8 +62,8 @@ const infoPopupEditProfile = {
   popupFormSelector: '.popup__form_edit_profile',
   popupFormfieldsSelector: '.popup__form-input',
 
-  popupFormfieldNameSelector: '.popup__form-input-text_value_name',
-  popupFormfieldDoesSelector: '.popup__form-input-text_value_does',
+  popupFormfieldNameSelector: '.popup__form-input_value_name',
+  popupFormfieldDoesSelector: '.popup__form-input_value_does',
 };
 
 const infoPopupAddCard = {
