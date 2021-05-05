@@ -1,29 +1,29 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Коломна',
-    link: 'https://images.unsplash.com/photo-1574580514971-662e3ef49eff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'
-  }
-];
+// const initialCards = [
+//   {
+//     name: 'Архыз',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+//   },
+//   {
+//     name: 'Челябинская область',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+//   },
+//   {
+//     name: 'Иваново',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+//   },
+//   {
+//     name: 'Камчатка',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+//   },
+//   {
+//     name: 'Холмогорский район',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+//   },
+//   {
+//     name: 'Коломна',
+//     link: 'https://images.unsplash.com/photo-1574580514971-662e3ef49eff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'
+//   }
+// ];
 
 // Блок profile
 const profile = document.querySelector('.profile');
@@ -75,6 +75,21 @@ const infoPopupAddCard = {
   popupFormfieldsSelector: '.popup__form-input',
 };
 
+const infoPopupEditImg = {
+  showPopup: 'popup_opened',
+  buttonCloseSelector: '.popup__btn',
+
+  popupFormSelector: '.popup__form_edit_img',
+  popupFormfieldsSelector: '.popup__form-input'
+}
+
+const infoPopupRemoveCard = {
+  showPopup: 'popup_opened',
+  buttonCloseSelector: '.popup__btn',
+
+  popupButtonDeleteSelector: '.button-popup_delete_card'
+};
+
 const selectorInfoUser = {
   profileSelector: '.profile__about',
   nameSelector: '.profile__title-name',
@@ -91,4 +106,14 @@ const validationConfig = {
   errorClass: 'popup__error-message_active'
 }
 
-export {initialCards, infoTemplatePlace, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, selectorInfoUser, validationConfig, editBtn, btnAddCard};
+// Для каждого отдельного сервера, свой apiServe обьект
+const apiServeMesto = {
+  CONECT_SERVER: 'https://mesto.nomoreparties.co/v1',
+  PATHS: {
+    user: 'users/me',
+    cards: 'cards',
+    cardLikes: 'cards/likes'
+  }
+};
+
+export {infoTemplatePlace, infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, selectorInfoUser, validationConfig, editBtn, btnAddCard, apiServeMesto};

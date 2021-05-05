@@ -2,6 +2,8 @@ import {validationConfig} from './utils/constants.js';
 
 class FormValidator {
   constructor(objValidConfig, formSelector) {
+    console.log(objValidConfig, formSelector)
+
     this._formSelector = formSelector;
     this._objValidConfig = objValidConfig;
   }
@@ -100,4 +102,6 @@ class FormValidator {
 export const createCardVadidation = new FormValidator(validationConfig, '.popup__form_create_card');
 createCardVadidation.enableValidation();
 export const editProfileVadidation = new FormValidator(validationConfig, '.popup__form_edit_profile');
+editProfileVadidation.enableValidation();
+export const editProfileImgVadidation = new FormValidator(validationConfig, '.popup_edit_profile-img');
 editProfileVadidation.enableValidation();

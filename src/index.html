@@ -18,11 +18,14 @@
   <!-- /.header -->
   <main class="content">
     <section class="profile content__position-center content__profile">
-      <img src="<%=require('./images/profile-image.jpg')%>" alt="Портрет" class="profile__img">
+      <div class="profile__img-container">
+        <img src="<%=require('./images/profile-image.jpg')%>" alt="Портрет" class="profile__img">
+        <img src="<%=require('./images/icons/profile-btn-edit.svg')%>" alt="Кнопка редактирования" class="profile__edit-img profile__edit-img_active">
+      </div>
       <div class="profile__about">
         <div class="profile__container-text">
-          <h1 class="profile__title-name">Жак-Ив Кусто</h1>
-          <p class="profile__subtitle-does">Исследователь океана</p>
+          <h1 class="profile__title-name"><!-- Жак-Ив Кусто -->Загрузка...</h1>
+          <p class="profile__subtitle-does"><!-- Исследователь океана -->Загрузка...</p>
         </div>
         <!-- /.profile__container-text -->
         <button class="profile__edit-btn" type="button"></button>
@@ -66,7 +69,7 @@
     </div>
     <!-- /.popup__container -->
   </div>
-  <!-- /.popup -->
+  <!-- /.popup_edit_profile -->
   <div class="popup popup_add_card">
     <div class="popup__container">
       <button class="popup__btn" type="button"></button>
@@ -104,6 +107,42 @@
   </div>
   <!-- /.popup -->
 
+  <div class="popup popup_remove_card">
+    <div class="popup__container">
+      <button class="popup__btn" type="button"></button>
+      <form class="popup__form popup__form_delete_card" name="delete-card">
+        <h2 class="popup__form-title popup__form-title_margin_bottom">
+          Вы уверены?
+        </h2>
+        <button class="button-popup button-popup_delete_card" type="submit">
+          Да
+        </button>
+      </form>
+    </div>
+    <!-- /.popup__container -->
+  </div>
+  <!-- /.popup_remove_card -->
+
+  <div class="popup popup_edit_profile-img">
+    <div class="popup__container">
+      <button class="popup__btn" type="button"></button>
+      <form class="popup__form popup__form_edit_img" name="delete-card">
+        <h2 class="popup__form-title popup__form-title_margin_bottom">
+          Обновить аватар
+        </h2>
+        <label class="popup__form-label">
+          <input type="text" class="popup__form-input" id="place-name-input" placeholder="Ссылка на картинку" name="placeName" minlength="2" maxlength="30" required>
+          <span class="popup__error-message place-name-input-error"></span>
+        </label>
+        <button class="button-popup button-popup_delete_card" type="submit">
+          Сохранить
+        </button>
+      </form>
+    </div>
+    <!-- /.popup__container -->
+  </div>
+  <!-- /.popup_remove_card -->
+
   <template class="place-list-template">
     <li class="place__item">
       <div class="card-place">
@@ -112,7 +151,10 @@
         <h2 class="card-place__title">
           Карачаево-Черкессия
         </h2>
-        <button class="card-place__like-btn" type="button"></button>
+        <div class="card-place__likes">
+          <button class="card-place__like-btn" type="button"></button>
+          <span class="card-place__counter">0</span>
+        </div>
       </div>
       <!-- /.card-place -->
     </li>

@@ -3,10 +3,10 @@ import Popup from "./Popup.js";
 export default class PopupWithForm extends Popup {
   constructor(selectorPopup,
     {popupFormSelector, popupFormfieldsSelector, ...objInfo},
-    formSubmitHandlerAddCard)
+    formSubmitHandler)
   {
     super(selectorPopup, objInfo);
-    this._formSubmitHandlerAddCard = formSubmitHandlerAddCard;
+    this._formSubmitHandler = formSubmitHandler;
     this._form = this._popup.querySelector(popupFormSelector);
     this._popupFormfieldsSelector = popupFormfieldsSelector;
 
@@ -27,6 +27,7 @@ export default class PopupWithForm extends Popup {
 
       return acc;
     }, {});
+
     return this.formValues;
   }
 
@@ -39,11 +40,13 @@ export default class PopupWithForm extends Popup {
   // Чтобы выставить event.preventDefault для всех форм кнопок отправки
   _submitForm(event) {
     event.preventDefault()
-    this._formSubmitHandlerAddCard(this._getInputValues())
+    this._formSubmitHandler(this._getInputValues())
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._form.addEventListener('submit', (event) => this._submitForm(event));
+    this._form.addEventListener('submit', (event) => {
+      this._submitForm(event);
+    });
   }
 }
