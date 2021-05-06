@@ -5,5 +5,5 @@
   background-color: white;
   display: grid;
   align-items: baseline;
-  grid-template-areas: "image image" "title button";
+  grid-template-areas: "image image" "title likes";
 }

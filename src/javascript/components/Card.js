@@ -1,52 +1,65 @@
 export default class Card {
-  constructor(objInitialCards, infoTemplatePlace, handleCardClick) {
+  constructor(objInitialCards, {userId}, templateSelector, deleteCardPlace, toggleLikes) {
+    // Информация о пользователе с сервера
     this._objInitialCards = objInitialCards;
-    this._handleCardClick = handleCardClick;
+    this._userId = userId;
 
-    this._template = document.querySelector(infoTemplatePlace.nameSelector);
+    // Методы колбеки
+    this._deleteCardPlace = deleteCardPlace;
+    this._toggleLikes = toggleLikes;
 
-    this._buttonDeleteCardSelector = infoTemplatePlace.buttonDeleteCardSelector;
-    this._buttonLikeCardSelector = infoTemplatePlace.buttonLikeCardSelector;
-    this._buttonLikeCardActive = infoTemplatePlace.buttonLikeCardActive;
-    this._cardImgSelector = infoTemplatePlace.cardImgSelector;
-    this._cardTitleSelector = infoTemplatePlace.cardTitleSelector;
-    this._cardItem = infoTemplatePlace.cardItemSelector;
+    // Дополнительные свойства
+    this._btnLikeActive = 'card-place__like-btn_active';
+
+    // Селекторы шаблона
+    this._template = document.querySelector(templateSelector).content;
+    this._item = this._template.querySelector('.place__item').cloneNode(true);
+    this._img = this._item.querySelector('.card-place__img');
+    this._name = this._item.querySelector('.card-place__title');
+    this._btnDelete = this._item.querySelector('.card-place__delete-btn');
+    this._btnLike = this._item.querySelector('.card-place__like-btn');
+    this._likeCounter = this._item.querySelector('.card-place__counter');
   }
 
-  _deleteCardPlace() {
-    // Круто.
-    this._cardTemplate.remove();
-    this._cardTemplate = null;
+  // Показывает при загрузке странице стоит ли лайк
+  showLikesLoading() {
+    const check = this._objInitialCards.likes.some(objUser => objUser._id === this._userId);
+    check && this._btnLike.classList.add(this._btnLikeActive);
   }
 
-  _toggleLikeCard(btn) {
-    btn.classList.toggle(this._buttonLikeCardActive);
+  // Показать колличество лайков
+  showCounterLikes(counterLikes) {
+    this._likeCounter.textContent = counterLikes;
   }
 
-  _setEventListeners() {
-    const buttonLikeCard = this._cardTemplate.querySelector(this._buttonLikeCardSelector);
-
-    this._cardTemplate.querySelector(this._buttonDeleteCardSelector).addEventListener('click', this._deleteCardPlace.bind(this));
-    buttonLikeCard.addEventListener('click', () => this._toggleLikeCard(buttonLikeCard));
-    this._cardTemplate.querySelector(this._cardImgSelector).addEventListener('click', () => this._handleCardClick(this._objInitialCards.name, this._objInitialCards.link));
+  _hideButtonDelete() {
+    if (this._userId !== this._objInitialCards.userId) {
+      this._btnDelete.classList.add('card-place__delete-btn_display_none');
+    }
   }
 
-  _selectTemplateCard() {
-    return this._template
-    .content
-    .querySelector(this._cardItem)
-    .cloneNode(true);
+  _toggleLikeClass() {
+    this._btnLike.classList.toggle(this._btnLikeActive);
+  }
+
+  _toggleLikeCard() {
+    this._btnLike.addEventListener('click', () => {
+      this._toggleLikeClass();
+      this._toggleLikes(this._btnLike.classList.contains(this._btnLikeActive), this._objInitialCards.idCard, this.showCounterLikes.bind(this));
+    })
   }
 
   fillCardTemplate() {
-    this._cardTemplate = this._selectTemplateCard();
+    this._name.textContent = this._objInitialCards.name;
+    this._img.src = this._objInitialCards.link;
+    this._img.alt = this._objInitialCards.name;
 
-    this._cardTemplate.querySelector(this._cardTitleSelector).textContent = this._objInitialCards.name;
-    this._cardTemplate.querySelector(this._cardImgSelector).src = this._objInitialCards.link;
-    this._cardTemplate.querySelector(this._cardImgSelector).alt = this._objInitialCards.name;
+    this._hideButtonDelete();
 
-    this._setEventListeners();
+    this._btnDelete.addEventListener('click', () => this._deleteCardPlace(this._item, this._objInitialCards.idCard));
 
-    return this._cardTemplate;
+    this._toggleLikeCard();
+
+    return this._item;
   }
 }

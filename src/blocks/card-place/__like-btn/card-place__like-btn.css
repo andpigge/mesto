@@ -7,12 +7,11 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(../../../images/icons/card-place-like.svg);
-  background-size: cover;
+  background-size: 100% 100%;
   width: 22px;
   height: 19px;
-  margin-right: 20px;
   margin-left: auto;
-  grid-area: button;
+  margin-bottom: 3px;
   transition: opacity 0.2s ease-out;
 }
 
