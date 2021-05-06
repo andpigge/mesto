@@ -43,7 +43,8 @@ export default class Storage {
       return {
         does: user.name,
         name: user.about,
-        userId: user._id
+        userId: user._id,
+        avatar: user.avatar
       }
     })
   }
@@ -67,5 +68,9 @@ export default class Storage {
 
   deleteLike(id) {
     return api.deleteLike(id);
+  }
+
+  updateImgProfile(url) {
+    return api.patchUpdateUserAvatar(url).then(profile => profile);
   }
 }

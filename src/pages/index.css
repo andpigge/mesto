@@ -31,6 +31,9 @@
 @import url(../blocks/place/place.css);
 @import url(../blocks/place/__item/place__item.css);
 @import url(../blocks/place/__list/place__list.css);
+@import url(../blocks/place/__result/plase__result.css);
+@import url(../blocks/place/__error/plase__error.css);
+@import url(../blocks/place/__result/_visible/plase__result_visible.css);
 /* card-place */
 @import url(../blocks/card-place/card-place.css);
 @import url(../blocks/card-place/__img/card-place__img.css);

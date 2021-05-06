@@ -1,22 +1,28 @@
 export default class Section {
-  constructor({initialCards, renderer}, containerSelector, counterSelector) {
+  constructor({initialCards, renderer}, containerSelector, renderLoading) {
     this._initialCards = initialCards;
-    this._container = document.querySelector(containerSelector);
-    this._counterSelector = counterSelector;
     this._renderer = renderer;
+    this._container = document.querySelector(containerSelector);
+    this._renderLoading = renderLoading;
   }
 
   renderItems() {
+    this._renderLoading.renderLoading(true);
+
     this._initialCards.then(objItems => {
       this.userInfo = objItems[1];
+
       objItems[0].forEach(objItem => {
         this._renderer(objItem, objItems[1]);
       });
     })
-  }
-
-  showCountLikes(card, likes) {
-    card.querySelector('.card-place__counter').textContent = likes.length;
+    .catch(() => {
+      res.status();
+      console.log(1)
+    })
+    .finally(() => {
+      this._renderLoading.renderLoading(false);
+    });
   }
 
   addItem(card) {

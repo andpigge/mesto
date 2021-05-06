@@ -20,7 +20,7 @@
     <section class="profile content__position-center content__profile">
       <div class="profile__img-container">
         <img src="<%=require('./images/profile-image.jpg')%>" alt="Портрет" class="profile__img">
-        <img src="<%=require('./images/icons/profile-btn-edit.svg')%>" alt="Кнопка редактирования" class="profile__edit-img profile__edit-img_active">
+        <img src="<%=require('./images/icons/profile-btn-edit.svg')%>" alt="Кнопка редактирования" class="profile__edit-img">
       </div>
       <div class="profile__about">
         <div class="profile__container-text">
@@ -35,6 +35,7 @@
     </section>
     <!-- /.profile -->
     <section class="place content__position-center content__place">
+      <div class="plase__result"></div>
       <ul class="place__list"></ul>
       <!-- /.place__list -->
     </section>
@@ -62,7 +63,7 @@
           <input type="text" class="popup__form-input popup__form-input_value_does" id="profile-does-input" value="Исследователь океана" placeholder="Деятельность" name="profileDoes" minlength="2" maxlength="200" required>
           <span class="popup__error-message profile-does-input-error"></span>
         </label>
-        <button class="button-popup" type="submit">
+        <button class="button-popup button-popup_edit_profile" type="submit">
           Сохранить
         </button>
       </form>
@@ -85,14 +86,12 @@
           <input type="url" class="popup__form-input popup__form-input_value_img" placeholder="Ссылка на картинку" id="place-img-input" name="placeImg" required>
           <span class="popup__error-message place-img-input-error"></span>
         </label>
-        <button class="button-popup" type="submit">
-          Создать
-        </button>
+        <button class="button-popup button-popup_add_card" type="submit">Создать</button>
       </form>
     </div>
     <!-- /.popup__container -->
   </div>
-  <!-- /.popup -->
+  <!-- /.popup_add_card -->
   <div class="popup popup_review_img">
     <div class="popup__container popup__container_review_img">
       <button class="popup__btn" type="button"></button>
@@ -105,7 +104,7 @@
     </div>
     <!-- /.popup__container -->
   </div>
-  <!-- /.popup -->
+  <!-- /.popup_review_img -->
 
   <div class="popup popup_remove_card">
     <div class="popup__container">
@@ -123,18 +122,18 @@
   </div>
   <!-- /.popup_remove_card -->
 
-  <div class="popup popup_edit_profile-img">
+  <div class="popup popup_edit_img">
     <div class="popup__container">
       <button class="popup__btn" type="button"></button>
-      <form class="popup__form popup__form_edit_img" name="delete-card">
+      <form class="popup__form popup__form_edit_img" name="edit-img-profile">
         <h2 class="popup__form-title popup__form-title_margin_bottom">
           Обновить аватар
         </h2>
         <label class="popup__form-label">
-          <input type="text" class="popup__form-input" id="place-name-input" placeholder="Ссылка на картинку" name="placeName" minlength="2" maxlength="30" required>
-          <span class="popup__error-message place-name-input-error"></span>
+          <input type="url" class="popup__form-input" id="url-img-edit" placeholder="Ссылка на картинку" name="imgEdit" required>
+          <span class="popup__error-message url-img-edit-error"></span>
         </label>
-        <button class="button-popup button-popup_delete_card" type="submit">
+        <button class="button-popup button-popup_edit_img" type="submit">
           Сохранить
         </button>
       </form>

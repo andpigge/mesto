@@ -1,68 +1,65 @@
 export default class Card {
-  constructor(objInitialCards, userId, infoTemplatePlace, deleteCardPlace, toggleLikes, checkLikeCard/* , userId */ /* , handleCardClick, initialLikesCount */) {
+  constructor(objInitialCards, {userId}, templateSelector, deleteCardPlace, toggleLikes) {
+    // Информация о пользователе с сервера
     this._objInitialCards = objInitialCards;
+    this._userId = userId;
+
+    // Методы колбеки
     this._deleteCardPlace = deleteCardPlace;
-    this._userId = userId.userId;
     this._toggleLikes = toggleLikes;
 
-    this._checkLikeCard = checkLikeCard;
-    /* this._handleCardClick = handleCardClick;
-    this._initialLikesCount = initialLikesCount; */
+    // Дополнительные свойства
+    this._btnLikeActive = 'card-place__like-btn_active';
 
-    /* this._showPopupRemoveCard = showPopupRemoveCard;
-    this._setEventListeners = setEventListeners; */
-
-    this._template = document.querySelector(infoTemplatePlace.nameSelector);
-
-    /* this._buttonDeleteCardSelector = infoTemplatePlace.buttonDeleteCardSelector;
-    this._buttonLikeCardSelector = infoTemplatePlace.buttonLikeCardSelector;
-    this._buttonLikeCardActive = infoTemplatePlace.buttonLikeCardActive; */
-    this._cardImgSelector = infoTemplatePlace.cardImgSelector;
-    this._cardTitleSelector = infoTemplatePlace.cardTitleSelector;
-    this._cardItem = infoTemplatePlace.cardItemSelector;
+    // Селекторы шаблона
+    this._template = document.querySelector(templateSelector).content;
+    this._item = this._template.querySelector('.place__item').cloneNode(true);
+    this._img = this._item.querySelector('.card-place__img');
+    this._name = this._item.querySelector('.card-place__title');
+    this._btnDelete = this._item.querySelector('.card-place__delete-btn');
+    this._btnLike = this._item.querySelector('.card-place__like-btn');
+    this._likeCounter = this._item.querySelector('.card-place__counter');
   }
 
-  _selectTemplateCard() {
-    return this._template
-    .content
-    .querySelector(this._cardItem)
-    .cloneNode(true);
+  // Показывает при загрузке странице стоит ли лайк
+  showLikesLoading() {
+    const check = this._objInitialCards.likes.some(objUser => objUser._id === this._userId);
+    check && this._btnLike.classList.add(this._btnLikeActive);
+  }
+
+  // Показать колличество лайков
+  showCounterLikes(counterLikes) {
+    this._likeCounter.textContent = counterLikes;
   }
 
   _hideButtonDelete() {
     if (this._userId !== this._objInitialCards.userId) {
-      this.cardTemplate.querySelector('.card-place__delete-btn').classList.add('card-place__delete-btn_display_none');
+      this._btnDelete.classList.add('card-place__delete-btn_display_none');
     }
   }
 
-  _toggleLikesCard() {
-    this.cardTemplate.querySelector('.card-place__like-btn').addEventListener('click', () => {
-      this._toggleLikes(this.cardTemplate, this._objInitialCards, this._userId)
+  _toggleLikeClass() {
+    this._btnLike.classList.toggle(this._btnLikeActive);
+  }
+
+  _toggleLikeCard() {
+    this._btnLike.addEventListener('click', () => {
+      this._toggleLikeClass();
+      this._toggleLikes(this._btnLike.classList.contains(this._btnLikeActive), this._objInitialCards.idCard, this.showCounterLikes.bind(this));
     })
   }
 
-  _addLike() {
-    const checks = this._checkLikeCard(this._objInitialCards, this._userId);
-    if (checks) {
-      this.cardTemplate.querySelector('.card-place__like-btn').classList.add('card-place__like-btn_active');
-    }
-  }
-
   fillCardTemplate() {
-    this.cardTemplate = this._selectTemplateCard();
-
-    this.cardTemplate.querySelector(this._cardTitleSelector).textContent = this._objInitialCards.name;
-    this.cardTemplate.querySelector(this._cardImgSelector).src = this._objInitialCards.link;
-    this.cardTemplate.querySelector(this._cardImgSelector).alt = this._objInitialCards.name;
+    this._name.textContent = this._objInitialCards.name;
+    this._img.src = this._objInitialCards.link;
+    this._img.alt = this._objInitialCards.name;
 
     this._hideButtonDelete();
 
-    this.cardTemplate.querySelector('.card-place__delete-btn').addEventListener('click', () => this._deleteCardPlace(this.cardTemplate, this._objInitialCards.idCard));
+    this._btnDelete.addEventListener('click', () => this._deleteCardPlace(this._item, this._objInitialCards.idCard));
 
-    this._toggleLikesCard();
+    this._toggleLikeCard();
 
-    this._addLike();
-
-    return this.cardTemplate;
+    return this._item;
   }
 }

@@ -5,8 +5,6 @@ export default class Api {
   #pathCards
   #cardLikes
   constructor({baseUrl, headers, paths: {user, cards, cardLikes}}) {
-    // console.log(headers)
-    // console.log(paths)
     this.#baseUrl = baseUrl;
     this.#headers = headers;
     this.#pathUser = user;
@@ -14,16 +12,6 @@ export default class Api {
     this.#cardLikes = cardLikes;
   }
 
-  // GET
-  // PATCH, POST
-  // DELETE
-  // PUT
-
-  // Просто получаем данные
-  // Передаем тело запроса
-  // Передаем параметры в url запроса
-
-  // Приватные методы еще на стадии расмотрения. Приватные свойства уже включены в стандарт.
   _serverConnectionGet(path) {
     return fetch(`${this.#baseUrl}/${path}`, {
       headers: this.#headers
@@ -131,10 +119,8 @@ export default class Api {
   }
 
   patchUpdateUserAvatar(avatarUrl) {
-    this._serverConnectionEdit(this.#cardLikes, 'PATCH', avatarUrl)
-      .then(like => {
-        console.log(like)
-      })
+    return this._serverConnectionSend(`${this.#pathUser}/avatar`, 'PATCH', {avatar: avatarUrl})
+      .then(url => url)
       .catch(err => {
         this._catchError(err);
       });

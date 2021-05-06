@@ -31,13 +31,11 @@ export default class PopupWithForm extends Popup {
     return this.formValues;
   }
 
-  // Чтобы не использовать в index.js готовую функцию, я предпочел заполнять форму здесь
   formFill(nameSelectorText, doesInfoSelectorText) {
     this._form.querySelector(this._objInfo.popupFormfieldNameSelector).value = nameSelectorText;
     this._form.querySelector(this._objInfo.popupFormfieldDoesSelector).value = doesInfoSelectorText;
   }
 
-  // Чтобы выставить event.preventDefault для всех форм кнопок отправки
   _submitForm(event) {
     event.preventDefault()
     this._formSubmitHandler(this._getInputValues())
