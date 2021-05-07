@@ -21,9 +21,9 @@ export default class RenderLoading {
 
   renderLoading(isLoading) {
     if (isLoading) {
-      this._preloaderContainer.classList.add(this._resultClass)
+      this._preloaderContainer.classList.add(this._resultClassVisible)
     } else {
-      this._preloaderContainer.classList.remove(this._resultClass)
+      this._preloaderContainer.classList.remove(this._resultClassVisible)
     }
   }
 }

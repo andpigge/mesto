@@ -16,10 +16,6 @@ export default class Section {
         this._renderer(objItem, objItems[1]);
       });
     })
-    .catch(() => {
-      res.status();
-      console.log(1)
-    })
     .finally(() => {
       this._renderLoading.renderLoading(false);
     });
