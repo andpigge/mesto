@@ -59,7 +59,7 @@ const cardPlace = new Section({initialCards: storage.getCardsAndUserId(), render
 
   setEventListeners(templateCardPlace._item);
 
-}}, '.place__list', new RenderLoading('.plase__result'));
+}}, '.place__list', new RenderLoading('.place'));
 
 cardPlace.renderItems();
 // *
