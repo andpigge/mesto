@@ -1,10 +1,10 @@
 .plase__result {
   display: none;
   background-image: url('../../../images/gif/preloader.gif');
-  background-size: contain;
+  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
   max-width: 880px;
   width: 100%;
-  min-height: 282px;
+  min-height: 256px;
 }
