@@ -240,6 +240,9 @@ function showProfile() {
     userInfo.updateProfileImg(userData.avatar);
     userInfo.setUserInfo(userData.name, userData.profession);
   })
+  .catch(err => {
+    console.error(err);
+  })
   .finally(() => {
     renderLoadingPlace.renderLoading(false);
   });
