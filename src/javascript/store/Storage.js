@@ -2,7 +2,7 @@ import { api } from '../../pages/index.js';
 
 export default class Storage {
 
-  initialCards() {
+  getCards() {
     return api.getInitialCards().then(dataCards => {
       return dataCards.reduce((acc, card) => {
         acc.unshift({name: card.name, link: card.link, likes: card.likes, idCard: card._id, userId: card.owner._id});
@@ -11,7 +11,8 @@ export default class Storage {
     })
   }
 
-  infoUser() {
+  // Не буду удалять Storage. Здесь например данные приходят неправильно. Вместо about приходит name, и наоборот. Все же удобнее данные формировать здесь, и вызывать тоже, так как приближает больше к декларированному программированию. Ну тоесть я здесь все данные с сервера контролирую.
+  getUser() {
     return api.getInitialUser().then(user => {
       return {
         does: user.name,

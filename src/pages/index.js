@@ -230,7 +230,7 @@ function showProfile() {
   renderLoadingProfileImg.renderLoadingChangeImg();
   renderLoadingPlace.renderLoading(true);
 
-  Promise.all([storage.initialCards(), storage.infoUser()]).then(data => {
+  Promise.all([storage.getCards(), storage.getUser()]).then(data => {
     userId = data[1].userId;
 
     cardPlace.renderItems(data[0]);
