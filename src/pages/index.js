@@ -1,27 +1,28 @@
 // CSS
-import '../../pages/index.css';
+import './index.css';
 
-import Card from '../components/Card.js';
-import {createCardVadidation, editProfileVadidation, editProfileImgVadidation} from '../FormValidator.js';
+import Card from '../javascript/components/Card.js';
+import {createCardVadidation, editProfileVadidation, editProfileImgVadidation} from '../javascript/FormValidator.js';
 
 // Отрисовка
-import Section from '../components/Section.js';
-import RenderLoading from '../utils/RenderLoading.js';
+import Section from '../javascript/components/Section.js';
+import RenderLoading from '../javascript/utils/RenderLoading.js';
 
 // import Popup from '../Popup.js';
-import PopupWithImage from '../PopupWithImage.js';
-import PopupWithForm from '../PopupWithForm.js';
-import PopupRemoveCard from '../PopupRemoveCard'
-import UserInfo from '../UserInfo.js';
+import PopupWithImage from '../javascript/PopupWithImage.js';
+import PopupWithForm from '../javascript/PopupWithForm.js';
+import PopupRemoveCard from '../javascript/PopupRemoveCard'
+import UserInfo from '../javascript/UserInfo.js';
 
-import {infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, editBtn, btnAddCard, btnEditProfile, apiServeMesto} from '../utils/constants.js';
+import {infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, editBtn, btnAddCard, btnEditProfile, apiServeMesto, selectorProfile} from '../javascript/utils/constants.js';
 
-import {token, cohortId} from '../utils/token.js';
-import Api from '../components/Api.js';
+import {token, cohortId} from '../javascript/utils/token.js';
+import Api from '../javascript/components/Api.js';
 
-import Storage from '../store/Storage.js';
+import Storage from '../javascript/store/Storage.js';
 const storage = new Storage();
 
+let userId;
 
 const api = new Api({
   baseUrl: `${apiServeMesto.CONECT_SERVER}/${cohortId}`,
@@ -37,44 +38,64 @@ function toggleLikes(myLike, idCard, showCounterLikes) {
   if (myLike) {
     storage.likeCard(idCard).then(data => {
       showCounterLikes(data.likes.length);
+    })
+    .catch(err => {
+      throw new Error(err);
     });
-    console.log('лайк добавлен')
   } else {
     storage.deleteLike(idCard).then(data => {
       showCounterLikes(data.likes.length);
+    })
+    .catch(err => {
+      throw new Error(err);
     });
-    console.log('лайк удален')
   }
 }
 
+function createCard(objItem) {
+  return new Card(objItem, userId, '.place-list-template', deleteCardPlace, toggleLikes, setEventListeners);
+}
+
+function renderLoading(selector) {
+  return new RenderLoading(selector);
+}
+
 // Класс вывод и просмотр попапа с карточками внутри
-const cardPlace = new Section({initialCards: storage.getCardsAndUserId(), renderer: (objItem, userId) => {
-  const templateCardPlace = new Card(objItem, userId, '.place-list-template', deleteCardPlace, toggleLikes);
+const cardPlace = new Section({/* dataCards: dataCards,  */renderer: objItem => {
+  const templateCardPlace = createCard(objItem);
 
   templateCardPlace.showLikesLoading();
 
   templateCardPlace.showCounterLikes(objItem.likes.length);
 
   cardPlace.addItem(templateCardPlace.fillCardTemplate());
+}}, '.place__list');
 
-  setEventListeners(templateCardPlace._item);
-
-}}, '.place__list', new RenderLoading('.place'));
-
-cardPlace.renderItems();
+// cardPlace.renderItems();
 // *
 
 // Класс открытия попапа удаления карточки
 const popupRemoveCard = new PopupRemoveCard('.popup_remove_card', infoPopupRemoveCard);
 popupRemoveCard.setEventListeners();
 
+const renderLoadingButtonDeleteCard = renderLoading('.button-popup_delete_card');
+
 // Колбек удаляет карточку при подтверждении
 function deleteCardPlace(cardTemplate, idCard) {
   popupRemoveCard.setSubmitAction(() => {
-    cardTemplate.remove();
-    popupRemoveCard.close();
+    renderLoadingButtonDeleteCard.renderLoadingChangeText(true);
 
-    storage.deleteCard(idCard);
+    storage.deleteCard(idCard).then(data => {
+      cardTemplate.remove();
+      popupRemoveCard.close();
+    })
+    .catch(err => {
+      cardTemplate.remove();
+      throw new Error(err);
+    })
+    .finally(() => {
+      renderLoadingButtonDeleteCard.renderLoadingChangeText(false);
+    })
   });
 }
 
@@ -94,56 +115,65 @@ function setEventListeners(cardTemplate) {
   imgCard.addEventListener('click', () => popupWithImage.open(titleCard.textContent, imgCard.src));
 }
 
+const renderLoadingPopupButtonAddCard = renderLoading('.button-popup_add_card');
+
 // Обрабатывает одну из форм попапа при событии submit. Посылает запрос на сервер, отрисовывает карточку при помощи класса Section. Класс RenderLoading добавляет прелоадер
 function formSubmitHandlerAddCard({placeImg, placeName}) {
 
-  const renderLoading = new RenderLoading('.button-popup_add_card');
-  renderLoading.renderLoadingChangeText(true);
+  renderLoadingPopupButtonAddCard.renderLoadingChangeText(true);
 
-  storage.createCardAndGetUserId(placeName, placeImg).then(card => {
-    const templateCardPlace = new Card(card[0], card[1], '.place-list-template', deleteCardPlace, toggleLikes);
+  storage.createCard(placeName, placeImg).then(card => {
+    const templateCardPlace = createCard(card);
 
     cardPlace.addItem(templateCardPlace.fillCardTemplate());
 
-    setEventListeners(templateCardPlace._item);
+    popupFormAddCard.close();
+  })
+  .catch(err => {
+    throw new Error(err);
   })
   .finally(() => {
-    renderLoading.renderLoadingChangeText(false);
+    renderLoadingPopupButtonAddCard.renderLoadingChangeText(false);
   })
-
-  popupFormAddCard.close();
 }
 
 // Класс информация о пользователе
-const userInfo = new UserInfo('.profile');
-userInfo.setEventListener();
+const userInfo = new UserInfo('.profile', selectorProfile);
+
+const renderLoadingPopupButtonEditProfileImg = renderLoading('.button-popup_edit_img');
 
 // Обрабатывает одну из форм попапа при событии submit. При помощи класса UserInfo картинку профиля
 function formSubmitHandlerEditProfileImg({imgEdit}) {
-  const renderLoading = new RenderLoading('.button-popup_edit_img');
-  renderLoading.renderLoadingChangeText(true);
+  renderLoadingPopupButtonEditProfileImg.renderLoadingChangeText(true);
 
   storage.updateImgProfile(imgEdit).then(profile => {
     userInfo.updateProfileImg(profile.avatar);
-  }).finally(() => {
-    renderLoading.renderLoadingChangeText(false);
+    popupFormEditProfuleImg.close();
+  })
+  .catch(err => {
+    throw new Error(err);
+  })
+  .finally(() => {
+    renderLoadingPopupButtonEditProfileImg.renderLoadingChangeText(false);
   });
-
-  popupFormEditProfuleImg.close();
 }
+
+const renderLoadingPopupButtonEditProfile = renderLoading('.button-popup_edit_profile');
 
 // Обрабатывает одну из форм попапа при событии submit. При помощи класса UserInfo редактирует профиль
 function formSubmitHandlerEditProfile({profileDoes, profileName}) {
-  const renderLoading = new RenderLoading('.button-popup_edit_profile');
-  renderLoading.renderLoadingChangeText(true);
+  renderLoadingPopupButtonEditProfile.renderLoadingChangeText(true);
 
   storage.updateProfile(profileDoes, profileName).then(profile => {
-    return userInfo.setUserInfo(profile.name, profile.does);
-  }).finally(() => {
-    renderLoading.renderLoadingChangeText(false);
+    popupFormEditProfule.close();
+    userInfo.setUserInfo(profile.name, profile.does);
+  })
+  .catch(err => {
+    throw new Error(err);
+  })
+  .finally(() => {
+    renderLoadingPopupButtonEditProfile.renderLoadingChangeText(false);
   });
-
-  popupFormEditProfule.close();
 }
 
 // * Классы попапов с формой
@@ -163,13 +193,18 @@ function openPopupAddCard(popup) {
   popup.open();
 }
 
+function formFill(nameValue, doesValue) {
+  popupFormEditProfule.form.querySelector(popupFormEditProfule.objInfo.popupFormfieldNameSelector).value = nameValue;
+  popupFormEditProfule.form.querySelector(popupFormEditProfule.objInfo.popupFormfieldDoesSelector).value = doesValue;
+}
+
 // Одна из функция которая открывает попап. Из профиля дынные о пользователе заносит в форму
 function openPopupEditProfule(popup) {
   editProfileVadidation.resetValidation();
 
   const {nameValue, doesValue} = userInfo.getUserInfo();
 
-  popupFormEditProfule.formFill(nameValue, doesValue);
+  formFill(nameValue, doesValue);
 
   popup.open();
 }
@@ -186,14 +221,25 @@ btnAddCard.addEventListener('click', () => openPopupAddCard(popupFormAddCard));
 editBtn.addEventListener('click', () => openPopupEditProfule(popupFormEditProfule));
 btnEditProfile.addEventListener('click', () => openPopupEditImgProfile(popupFormEditProfuleImg))
 
+const renderLoadingProfileImg = renderLoading('.profile__img');
+const renderLoadingPlace = renderLoading('.place');
+
+
 // Загрузает из сервера данные о пользователе
 function showProfile() {
-  const renderLoading = new RenderLoading('.profile__img');
-  renderLoading.renderLoadingChangeImg();
+  renderLoadingProfileImg.renderLoadingChangeImg();
+  renderLoadingPlace.renderLoading(true);
 
-  storage.infoUser().then(profile => {
-    userInfo.updateProfileImg(profile.avatar);
-    userInfo.setUserInfo(profile.name, profile.does);
+  Promise.all([storage.getCards(), storage.getUser()]).then(data => {
+    userId = data[1].userId;
+
+    cardPlace.renderItems(data[0]);
+
+    userInfo.updateProfileImg(data[1].avatar);
+    userInfo.setUserInfo(data[1].name, data[1].does);
+  })
+  .finally(() => {
+    renderLoadingPlace.renderLoading(false);
   });
 }
 

@@ -1,8 +1,8 @@
-import { api } from '../pages/index.js';
+import { api } from '../../pages/index.js';
 
 export default class Storage {
 
-  initialCards() {
+  getCards() {
     return api.getInitialCards().then(dataCards => {
       return dataCards.reduce((acc, card) => {
         acc.unshift({name: card.name, link: card.link, likes: card.likes, idCard: card._id, userId: card.owner._id});
@@ -11,16 +11,16 @@ export default class Storage {
     })
   }
 
-  userId() {
+  // Не буду удалять Storage. Здесь например данные приходят неправильно. Вместо about приходит name, и наоборот. Все же удобнее данные формировать здесь, и вызывать тоже, так как приближает больше к декларированному программированию. Ну тоесть я здесь все данные с сервера контролирую.
+  getUser() {
     return api.getInitialUser().then(user => {
       return {
-        userId: user._id
+        does: user.name,
+        name: user.about,
+        userId: user._id,
+        avatar: user.avatar
       }
     })
-  }
-
-  getCardsAndUserId() {
-    return Promise.all([this.initialCards(), this.userId()]);
   }
 
   createCard(link, name) {
@@ -32,21 +32,6 @@ export default class Storage {
         userId: card.owner._id
       }
     });
-  }
-
-  createCardAndGetUserId(link, name) {
-    return Promise.all([this.createCard(link, name), this.userId()]);
-  }
-
-  infoUser() {
-    return api.getInitialUser().then(user => {
-      return {
-        does: user.name,
-        name: user.about,
-        userId: user._id,
-        avatar: user.avatar
-      }
-    })
   }
 
   updateProfile(name, about) {

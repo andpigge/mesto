@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(objInitialCards, {userId}, templateSelector, deleteCardPlace, toggleLikes) {
+  constructor(objInitialCards, userId, templateSelector, deleteCardPlace, toggleLikes, setEventListeners) {
     // Информация о пользователе с сервера
     this._objInitialCards = objInitialCards;
     this._userId = userId;
@@ -7,6 +7,7 @@ export default class Card {
     // Методы колбеки
     this._deleteCardPlace = deleteCardPlace;
     this._toggleLikes = toggleLikes;
+    this._setEventListeners = setEventListeners;
 
     // Дополнительные свойства
     this._btnLikeActive = 'card-place__like-btn_active';
@@ -59,6 +60,8 @@ export default class Card {
     this._btnDelete.addEventListener('click', () => this._deleteCardPlace(this._item, this._objInitialCards.idCard));
 
     this._toggleLikeCard();
+
+    this._setEventListeners(this._item);
 
     return this._item;
   }
