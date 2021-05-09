@@ -1,12 +1,9 @@
 import Popup from "./Popup.js";
 
 export default class popupRemoveCard extends Popup {
-  constructor(selectorPopup, {popupFormSelector, popupButtonDeleteSelector, ...objInfo}, deleteCardPlace) {
+  constructor(selectorPopup, {popupFormSelector, ...objInfo}) {
     super(selectorPopup, objInfo);
-    this._popupFormSelector = this._popup.querySelector(popupFormSelector);
-    this._popupButtonDelete = this._popup.querySelector(popupButtonDeleteSelector);
-
-    this._deleteCardPlace = deleteCardPlace;
+    this._popupForm = this._popup.querySelector(popupFormSelector);
   }
 
   setSubmitAction(action) {
@@ -15,7 +12,7 @@ export default class popupRemoveCard extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._popupFormSelector.addEventListener('submit', event => {
+    this._popupForm.addEventListener('submit', event => {
       event.preventDefault();
       this._handleSubmitCallback();
     });

@@ -52,7 +52,6 @@ const infoPopupRemoveCard = {
   buttonCloseSelector: '.popup__btn',
 
   popupFormSelector: '.popup__form_delete_card',
-  popupButtonDeleteSelector: '.button-popup_delete_card'
 };
 
 /* Для каждой формы validationConfig свой, можно вынести в отдельный файл, если обьектов станет много */

@@ -40,14 +40,15 @@ function toggleLikes(myLike, idCard, showCounterLikes) {
       showCounterLikes(data.likes.length);
     })
     .catch(err => {
-      throw new Error(err);
+      console.error(err);
     });
   } else {
     storage.deleteLike(idCard).then(data => {
       showCounterLikes(data.likes.length);
     })
     .catch(err => {
-      throw new Error(err);
+      console.error(err);
+      // throw new Error(err); остановит приложение с ошибкой
     });
   }
 }
@@ -90,8 +91,7 @@ function deleteCardPlace(cardTemplate, idCard) {
       popupRemoveCard.close();
     })
     .catch(err => {
-      cardTemplate.remove();
-      throw new Error(err);
+      console.error(err);
     })
     .finally(() => {
       renderLoadingButtonDeleteCard.renderLoadingChangeText(false);
@@ -130,7 +130,7 @@ function formSubmitHandlerAddCard({placeImg, placeName}) {
     popupFormAddCard.close();
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonAddCard.renderLoadingChangeText(false);
@@ -151,7 +151,7 @@ function formSubmitHandlerEditProfileImg({imgEdit}) {
     popupFormEditProfuleImg.close();
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonEditProfileImg.renderLoadingChangeText(false);
@@ -169,7 +169,7 @@ function formSubmitHandlerEditProfile({profileDoes, profileName}) {
     userInfo.setUserInfo(profile.name, profile.does);
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonEditProfile.renderLoadingChangeText(false);
@@ -230,13 +230,15 @@ function showProfile() {
   renderLoadingProfileImg.renderLoadingChangeImg();
   renderLoadingPlace.renderLoading(true);
 
-  Promise.all([storage.getCards(), storage.getUser()]).then(data => {
-    userId = data[1].userId;
+  // Круто
+  Promise.all( [storage.getCards(), storage.getUser()] )
+  .then(([cards, userData]) => {
+    userId = userData.userId;
 
-    cardPlace.renderItems(data[0]);
+    cardPlace.renderItems(cards);
 
-    userInfo.updateProfileImg(data[1].avatar);
-    userInfo.setUserInfo(data[1].name, data[1].does);
+    userInfo.updateProfileImg(userData.avatar);
+    userInfo.setUserInfo(userData.name, userData.profession);
   })
   .finally(() => {
     renderLoadingPlace.renderLoading(false);
