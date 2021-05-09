@@ -1,4 +1,4 @@
-import {validationConfig} from './utils/constants.js';
+import {validationConfig} from '../utils/constants.js';
 
 class FormValidator {
   constructor(objValidConfig, formSelector) {

@@ -5,7 +5,13 @@ export default class Storage {
   getCards() {
     return api.getInitialCards().then(dataCards => {
       return dataCards.reduce((acc, card) => {
-        acc.unshift({name: card.name, link: card.link, likes: card.likes, idCard: card._id, userId: card.owner._id});
+        acc.unshift(
+          { name: card.name,
+            link: card.link,
+            likes: card.likes,
+            idCard: card._id,
+            userId: card.owner._id }
+        );
         return acc;
       }, []);
     })
@@ -15,7 +21,7 @@ export default class Storage {
   getUser() {
     return api.getInitialUser().then(user => {
       return {
-        does: user.name,
+        profession: user.name,
         name: user.about,
         userId: user._id,
         avatar: user.avatar

@@ -2,17 +2,17 @@
 import './index.css';
 
 import Card from '../javascript/components/Card.js';
-import {createCardVadidation, editProfileVadidation, editProfileImgVadidation} from '../javascript/FormValidator.js';
+import {createCardVadidation, editProfileVadidation, editProfileImgVadidation} from '../javascript/components/FormValidator';
 
 // Отрисовка
 import Section from '../javascript/components/Section.js';
 import RenderLoading from '../javascript/utils/RenderLoading.js';
 
 // import Popup from '../Popup.js';
-import PopupWithImage from '../javascript/PopupWithImage.js';
-import PopupWithForm from '../javascript/PopupWithForm.js';
-import PopupRemoveCard from '../javascript/PopupRemoveCard'
-import UserInfo from '../javascript/UserInfo.js';
+import PopupWithImage from '../javascript/components/PopupWithImage.js';
+import PopupWithForm from '../javascript/components/PopupWithForm.js';
+import PopupRemoveCard from '../javascript/components/PopupRemoveCard'
+import UserInfo from '../javascript/components/UserInfo.js';
 
 import {infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, editBtn, btnAddCard, btnEditProfile, apiServeMesto, selectorProfile} from '../javascript/utils/constants.js';
 
@@ -40,20 +40,25 @@ function toggleLikes(myLike, idCard, showCounterLikes) {
       showCounterLikes(data.likes.length);
     })
     .catch(err => {
-      throw new Error(err);
+      console.error(err);
     });
   } else {
     storage.deleteLike(idCard).then(data => {
       showCounterLikes(data.likes.length);
     })
     .catch(err => {
-      throw new Error(err);
+      console.error(err);
+      // throw new Error(err); остановит приложение с ошибкой
     });
   }
 }
 
+// Класс попапа просмотра картинки карточки
+const popupWithImage =  new PopupWithImage('.popup_review_img', infoPopupReviewImg);
+popupWithImage.setEventListeners();
+
 function createCard(objItem) {
-  return new Card(objItem, userId, '.place-list-template', deleteCardPlace, toggleLikes, setEventListeners);
+  return new Card(objItem, userId, '.place-list-template', deleteCardPlace, toggleLikes, popupRemoveCard.open.bind(popupRemoveCard), popupWithImage.open.bind(popupWithImage));
 }
 
 function renderLoading(selector) {
@@ -90,8 +95,7 @@ function deleteCardPlace(cardTemplate, idCard) {
       popupRemoveCard.close();
     })
     .catch(err => {
-      cardTemplate.remove();
-      throw new Error(err);
+      console.error(err);
     })
     .finally(() => {
       renderLoadingButtonDeleteCard.renderLoadingChangeText(false);
@@ -99,12 +103,8 @@ function deleteCardPlace(cardTemplate, idCard) {
   });
 }
 
-// Класс попапа просмотра картинки карточки
-const popupWithImage =  new PopupWithImage('.popup_review_img', infoPopupReviewImg);
-popupWithImage.setEventListeners();
-
 // Устанавливает обработчики на карточку
-function setEventListeners(cardTemplate) {
+/* function setEventListeners(cardTemplate) {
   const card = cardTemplate.querySelector('.card-place');
   const buttonDeleteCard = card.querySelector('.card-place__delete-btn');
   const imgCard = card.querySelector('.card-place__img');
@@ -113,7 +113,7 @@ function setEventListeners(cardTemplate) {
   buttonDeleteCard.addEventListener('click', popupRemoveCard.open.bind(popupRemoveCard));
 
   imgCard.addEventListener('click', () => popupWithImage.open(titleCard.textContent, imgCard.src));
-}
+} */
 
 const renderLoadingPopupButtonAddCard = renderLoading('.button-popup_add_card');
 
@@ -130,7 +130,7 @@ function formSubmitHandlerAddCard({placeImg, placeName}) {
     popupFormAddCard.close();
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonAddCard.renderLoadingChangeText(false);
@@ -151,7 +151,7 @@ function formSubmitHandlerEditProfileImg({imgEdit}) {
     popupFormEditProfuleImg.close();
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonEditProfileImg.renderLoadingChangeText(false);
@@ -169,7 +169,7 @@ function formSubmitHandlerEditProfile({profileDoes, profileName}) {
     userInfo.setUserInfo(profile.name, profile.does);
   })
   .catch(err => {
-    throw new Error(err);
+    console.error(err);
   })
   .finally(() => {
     renderLoadingPopupButtonEditProfile.renderLoadingChangeText(false);
@@ -230,13 +230,15 @@ function showProfile() {
   renderLoadingProfileImg.renderLoadingChangeImg();
   renderLoadingPlace.renderLoading(true);
 
-  Promise.all([storage.getCards(), storage.getUser()]).then(data => {
-    userId = data[1].userId;
+  // Круто
+  Promise.all( [storage.getCards(), storage.getUser()] )
+  .then(([cards, userData]) => {
+    userId = userData.userId;
 
-    cardPlace.renderItems(data[0]);
+    cardPlace.renderItems(cards);
 
-    userInfo.updateProfileImg(data[1].avatar);
-    userInfo.setUserInfo(data[1].name, data[1].does);
+    userInfo.updateProfileImg(userData.avatar);
+    userInfo.setUserInfo(userData.name, userData.profession);
   })
   .finally(() => {
     renderLoadingPlace.renderLoading(false);

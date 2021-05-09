@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(objInitialCards, userId, templateSelector, deleteCardPlace, toggleLikes, setEventListeners) {
+  constructor(objInitialCards, userId, templateSelector, deleteCardPlace, toggleLikes, popupRemoveCardOpen, popupWithImageOpen) {
     // Информация о пользователе с сервера
     this._objInitialCards = objInitialCards;
     this._userId = userId;
@@ -7,7 +7,8 @@ export default class Card {
     // Методы колбеки
     this._deleteCardPlace = deleteCardPlace;
     this._toggleLikes = toggleLikes;
-    this._setEventListeners = setEventListeners;
+    this._popupRemoveCardOpen = popupRemoveCardOpen;
+    this._popupWithImageOpen = popupWithImageOpen;
 
     // Дополнительные свойства
     this._btnLikeActive = 'card-place__like-btn_active';
@@ -33,12 +34,14 @@ export default class Card {
     this._likeCounter.textContent = counterLikes;
   }
 
+  // Скрывает кнопку удалить если это чужая карточка
   _hideButtonDelete() {
     if (this._userId !== this._objInitialCards.userId) {
       this._btnDelete.classList.add('card-place__delete-btn_display_none');
     }
   }
 
+  // Меняет класс на лайках
   _toggleLikeClass() {
     this._btnLike.classList.toggle(this._btnLikeActive);
   }
@@ -50,6 +53,13 @@ export default class Card {
     })
   }
 
+  _setEventListeners() {
+    this._btnDelete.addEventListener('click', this._popupRemoveCardOpen);
+    this._btnDelete.addEventListener('click', () => this._deleteCardPlace(this._item, this._objInitialCards.idCard));
+    this._img.addEventListener('click', () => this._popupWithImageOpen(this._name.textContent, this._img.src));
+    this._toggleLikeCard();
+  }
+
   fillCardTemplate() {
     this._name.textContent = this._objInitialCards.name;
     this._img.src = this._objInitialCards.link;
@@ -57,11 +67,7 @@ export default class Card {
 
     this._hideButtonDelete();
 
-    this._btnDelete.addEventListener('click', () => this._deleteCardPlace(this._item, this._objInitialCards.idCard));
-
-    this._toggleLikeCard();
-
-    this._setEventListeners(this._item);
+    this._setEventListeners();
 
     return this._item;
   }
