@@ -1,4 +1,4 @@
-import { api } from '../pages/index.js';
+import { api } from '../../pages/index.js';
 
 export default class Storage {
 
@@ -11,16 +11,15 @@ export default class Storage {
     })
   }
 
-  userId() {
+  infoUser() {
     return api.getInitialUser().then(user => {
       return {
-        userId: user._id
+        does: user.name,
+        name: user.about,
+        userId: user._id,
+        avatar: user.avatar
       }
     })
-  }
-
-  getCardsAndUserId() {
-    return Promise.all([this.initialCards(), this.userId()]);
   }
 
   createCard(link, name) {
@@ -32,21 +31,6 @@ export default class Storage {
         userId: card.owner._id
       }
     });
-  }
-
-  createCardAndGetUserId(link, name) {
-    return Promise.all([this.createCard(link, name), this.userId()]);
-  }
-
-  infoUser() {
-    return api.getInitialUser().then(user => {
-      return {
-        does: user.name,
-        name: user.about,
-        userId: user._id,
-        avatar: user.avatar
-      }
-    })
   }
 
   updateProfile(name, about) {

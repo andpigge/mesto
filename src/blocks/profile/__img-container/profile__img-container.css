@@ -7,9 +7,9 @@
   border-radius: 50%;
 }
 
-/* .profile__img-container:hover {
-  opacity: .8;
-} */
+.profile__img-container:hover .profile__edit-img {
+  display: block;
+}
 
 @media screen and (max-width: 506px) {
   .profile__img-container {

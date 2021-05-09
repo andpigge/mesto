@@ -51,6 +51,7 @@ const infoPopupRemoveCard = {
   showPopup: 'popup_opened',
   buttonCloseSelector: '.popup__btn',
 
+  popupFormSelector: '.popup__form_delete_card',
   popupButtonDeleteSelector: '.button-popup_delete_card'
 };
 
@@ -74,4 +75,12 @@ const apiServeMesto = {
   }
 };
 
-export {infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, validationConfig, editBtn, btnAddCard, btnEditProfile, apiServeMesto};
+const selectorProfile = {
+  nameSelector: '.profile__title-name',
+  professionSelector: '.profile__subtitle-does',
+  imgSelector: '.profile__img',
+  containerImgSelector: '.profile__img-container',
+  buttonEditImgSelector: '.profile__edit-img'
+}
+
+export {infoPopupReviewImg, infoPopupEditProfile, infoPopupAddCard, infoPopupEditImg, infoPopupRemoveCard, validationConfig, editBtn, btnAddCard, btnEditProfile, apiServeMesto, selectorProfile};

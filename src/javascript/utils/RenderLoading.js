@@ -3,6 +3,7 @@ import gitPreloader from '../../images/gif/preloaderProfileImg.gif';
 export default class RenderLoading {
   constructor(preloaderContainerSelector) {
     this._preloaderContainer = document.querySelector(preloaderContainerSelector);
+    this._preloaderContainerTextContent = this._preloaderContainer.textContent;
     this._resultClassVisible = 'plase__result_visible';
   }
 
@@ -12,13 +13,7 @@ export default class RenderLoading {
     return result;
   }
 
-  getTextContent() {
-    this._preloaderContainerTextContent = this._preloaderContainer.textContent;
-  }
-
   renderLoadingChangeText(isLoading) {
-    this.getTextContent();
-
     if (isLoading) {
       this._preloaderContainer.textContent = this._preloaderContainerTextContent.concat('...');
     } else {

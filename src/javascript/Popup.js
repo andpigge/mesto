@@ -1,5 +1,4 @@
 export default class Popup {
-  // Помню про ТЗ. objInfo обьекты будут хранить свои классы открытия и кнопки крестика. Можно было сразу передать обьект с именем попапа, но возможно это противоречит ТЗ.
   constructor(selectorPopup, {showPopup, buttonCloseSelector}) {
     this._popup = document.querySelector(selectorPopup);
     this._showPopup = showPopup;
@@ -23,7 +22,7 @@ export default class Popup {
     }
   }
 
-  _handleEscClose() {
+  _handleEscClose(event) {
     if (event.key === 'Escape') {
       this.close();
     }

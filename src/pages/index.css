@@ -26,7 +26,6 @@
 @import url(../blocks/profile/__title-name/profile__title-name.css);
 @import url(../blocks/profile/__edit-img/profile__edit-img.css);
 @import url(../blocks/profile/__img-container/profile__img-container.css);
-@import url(../blocks/profile/__edit-img/_active/profile__edit-img_active.css);
 /* place */
 @import url(../blocks/place/place.css);
 @import url(../blocks/place/__item/place__item.css);
